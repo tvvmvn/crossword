@@ -9,6 +9,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "K-Crossword",
   description: "Learning Korean is FUN with Crossword Puzzle!",
+  verification: {
+    google: "yLKrPSBUo6umY7XBmdKI72TM2LMwY0kmDtvgv6P24e8" 
+  }
 };
 
 export default function Layout({ children }) {
