@@ -13,6 +13,8 @@ export default function Home() {
           </h1>
         </header>
 
+
+
         <div className="px-4">
           <blockquote className="mt-8 px-4 py-2 bg-red-400 rounded">
             <p className="text-white font-semibold">
