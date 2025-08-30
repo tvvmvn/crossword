@@ -24,7 +24,7 @@ export default function Keyboard({
   return (
     <div className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} border-t-4 transition-all z-20`}>
       <div className="bg-gray-100 flex justify-center">
-        <div className="w-xl grid grid-cols-6 gap-2 p-4">
+        <div className="w-xl grid grid-cols-6 gap-2 px-4 py-8">
           {keys.map(key => (
             <button
               key={key}
@@ -37,7 +37,7 @@ export default function Keyboard({
         </div>
       </div>
       <button 
-        className="w-full h-full bg-gray-400" 
+        className="w-full h-full bg-black" 
         onClick={handleClick}
       >
       </button>

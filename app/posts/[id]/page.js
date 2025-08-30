@@ -1,7 +1,6 @@
-import { getPost } from "@/lib/data";
 import Link from "next/link";
+import { getAllPosts, getPost } from "@/lib/data";
 import Puzzle from "@/components/puzzle";
-import { getAllPosts } from "@/lib/data";
 
 export function generateStaticParams() {
   const posts = getAllPosts();
@@ -21,21 +20,20 @@ export default async function Page({ params }) {
   return (
     <>
       <div className="px-4">
-        <h1 className="my-4 text-2xl font-semibold">
-          Puzzle at {post.id} ✏️
-        </h1>
-
         <p className="my-4">
           <Link href="/" className="">
             ← Back
           </Link>
         </p>
+        <h1 className="my-4 text-2xl font-semibold">
+          Puzzle at {post.id} ✏️
+        </h1>
       </div>
 
       <Puzzle initialCells={post.cells} />
 
       <section className="mt-8 px-4">
-        <h3 className="my-4 font-semibold">
+        <h3 className="my-4 text-xl font-semibold">
           Across
         </h3>
         <ul>
@@ -47,7 +45,7 @@ export default async function Page({ params }) {
             ))}
         </ul>
 
-        <h3 className="my-4 font-semibold">
+        <h3 className="my-4 text-xl font-semibold">
           Down
         </h3>
         <ul>

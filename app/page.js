@@ -1,5 +1,6 @@
-import { getAllPosts } from "@/lib/data"
 import Link from "next/link";
+import { getAllPosts } from "@/lib/data"
+import About from "@/components/about";
 
 export default function Home() {
 
@@ -8,28 +9,26 @@ export default function Home() {
   return (
       <>
         <header className="px-4">
-          <h1 className="my-4 text-2xl font-semibold"> 
-            Learning Korean with Crossword Puzzle! 📚
+          <About />
+          <h1 className="my-8 text-8xl font-semibold"> 
+            Cross <br/> 
+            Word+
           </h1>
+          <h3 className="my-4 text-xl font-semibold">
+            Learning Korean 🇰🇷 <br /> 
+            with Crossword Puzzle <br />
+            is FUN!
+          </h3>
         </header>
 
-
-
-        <div className="px-4">
-          <blockquote className="mt-8 px-4 py-2 bg-red-400 rounded">
+        {/* <div className="mt-4">
+          <blockquote className="px-4 py-2 bg-red-400">
             <p className="text-white font-semibold">
               🗓️ Puzzle is updated on every saturday!
             </p>
           </blockquote>
-        </div>
+        </div> */}
 
-        <div className="mt-8">
-          <img 
-            src="/crossword/main.jpg"
-            alt="main-image" 
-            className="w-full h-48 object-cover"
-          />
-        </div>
 
         <div className="px-4">
           <ul className="list-disc mt-8 px-4">

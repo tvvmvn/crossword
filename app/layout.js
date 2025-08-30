@@ -20,9 +20,9 @@ export default function Layout({ children }) {
     <html lang="en">
       <body>
         <div className="bg-gray-100">
-          <div className="max-w-xl min-h-screen mx-auto bg-white">
-            <header className="pt-2"></header>
+          <div className="max-w-xl mx-auto bg-white">
             
+            {/* Advertise */}
             <ins
               className="kakao_ad_area"
               style={{ display: "none" }}
@@ -36,7 +36,8 @@ export default function Layout({ children }) {
               async
             />
 
-            <main>
+            {/* Main */}
+            <main className="min-h-screen">
               {children}
             </main>
 
