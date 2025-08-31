@@ -1,13 +1,13 @@
 {
-  "id": "2100-00-00",
+  "id": "2025-00-02",
   "cells": [
     [
       {
         "id": "d00",
         "label": 1,
-        "across": null,
+        "across": true,
         "down": true,
-        "value": "고",
+        "value": "멍",
         "q": ""
       },
       {
@@ -15,7 +15,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "기",
         "q": ""
       },
       {
@@ -28,10 +28,10 @@
       },
       {
         "id": "d03",
-        "label": 2,
+        "label": null,
         "across": null,
-        "down": true,
-        "value": "주",
+        "down": null,
+        "value": "",
         "q": ""
       },
       {
@@ -49,7 +49,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "양",
+        "value": "멍",
         "q": ""
       },
       {
@@ -62,10 +62,10 @@
       },
       {
         "id": "d12",
-        "label": 3,
-        "across": true,
-        "down": true,
-        "value": "고",
+        "label": null,
+        "across": null,
+        "down": null,
+        "value": "",
         "q": ""
       },
       {
@@ -73,7 +73,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "민",
+        "value": "",
         "q": ""
       },
       {
@@ -88,7 +88,7 @@
     [
       {
         "id": "d20",
-        "label": 4,
+        "label": 2,
         "across": true,
         "down": null,
         "value": "이",
@@ -96,10 +96,10 @@
       },
       {
         "id": "d21",
-        "label": 5,
+        "label": 3,
         "across": null,
         "down": true,
-        "value": "야",
+        "value": "사",
         "q": ""
       },
       {
@@ -107,7 +107,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "기",
+        "value": "",
         "q": ""
       },
       {
@@ -120,10 +120,10 @@
       },
       {
         "id": "d24",
-        "label": 6,
+        "label": null,
         "across": null,
-        "down": true,
-        "value": "소",
+        "down": null,
+        "value": "",
         "q": ""
       }
     ],
@@ -141,7 +141,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "구",
+        "value": "기",
         "q": ""
       },
       {
@@ -154,10 +154,10 @@
       },
       {
         "id": "d33",
-        "label": 7,
-        "across": true,
-        "down": true,
-        "value": "거",
+        "label": null,
+        "across": null,
+        "down": null,
+        "value": "",
         "q": ""
       },
       {
@@ -165,7 +165,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "리",
+        "value": "",
         "q": ""
       }
     ],
@@ -180,10 +180,10 @@
       },
       {
         "id": "d41",
-        "label": 8,
-        "across": true,
+        "label": null,
+        "across": null,
         "down": null,
-        "value": "장",
+        "value": "",
         "q": ""
       },
       {
@@ -191,7 +191,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "식",
+        "value": "",
         "q": ""
       },
       {
@@ -199,7 +199,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "품",
+        "value": "",
         "q": ""
       },
       {
@@ -216,82 +216,26 @@
     {
       "id": "c0",
       "label": 1,
-      "across": null,
+      "across": true,
       "down": true,
-      "acrossValue": "",
-      "acrossError": null,
-      "downValue": "meow",
-      "downError": false
+      "acrossValue": "meat",
+      "downValue": "bow wow"
     },
     {
       "id": "c1",
       "label": 2,
-      "across": null,
-      "down": true,
-      "acrossValue": "",
-      "acrossError": null,
-      "downValue": "residents",
-      "downError": false
+      "across": true,
+      "down": null,
+      "acrossValue": "move",
+      "downValue": ""
     },
     {
       "id": "c2",
       "label": 3,
-      "across": true,
-      "down": true,
-      "acrossValue": "agony",
-      "acrossError": false,
-      "downValue": "meat",
-      "downError": false
-    },
-    {
-      "id": "c3",
-      "label": 4,
-      "across": true,
-      "down": null,
-      "acrossValue": "story",
-      "acrossError": false,
-      "downValue": "",
-      "downError": null
-    },
-    {
-      "id": "c4",
-      "label": 5,
       "across": null,
       "down": true,
       "acrossValue": "",
-      "acrossError": null,
-      "downValue": "baseball stadium",
-      "downError": false
-    },
-    {
-      "id": "c5",
-      "label": 6,
-      "across": null,
-      "down": true,
-      "acrossValue": "",
-      "acrossError": null,
-      "downValue": "sound",
-      "downError": false
-    },
-    {
-      "id": "c6",
-      "label": 7,
-      "across": true,
-      "down": true,
-      "acrossValue": "street",
-      "acrossError": false,
-      "downValue": "bubble",
-      "downError": false
-    },
-    {
-      "id": "c7",
-      "label": 8,
-      "across": true,
-      "down": null,
-      "acrossValue": "deco",
-      "acrossError": false,
-      "downValue": "",
-      "downError": null
+      "downValue": "scam"
     }
   ]
 }

@@ -28,7 +28,7 @@ export default function Cell({
       {label && (
         <label
           htmlFor={id}
-          className="absolute top-0 left-0 px-1 font-semibold text-black/[0.2] z-10"
+          className="absolute top-0 left-0 px-1 font-semibold text-black z-10"
         >
           {label}
         </label>

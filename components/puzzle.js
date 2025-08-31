@@ -4,7 +4,11 @@ import { useState } from "react";
 import Keyboard from "./keyboard";
 import Cell from "./cell";
 
-export default function Puzzle({ initialCells }) {
+export default function Puzzle({ 
+  id,
+  initialCells,
+  captions
+}) {
 
   const [cells, setCells] = useState(initialCells)
   const [currentCrds, setCurrentCrds] = useState([-1, -1]);
@@ -85,19 +89,25 @@ export default function Puzzle({ initialCells }) {
   }
 
   return (
-    <div className="mt-8 px-4">
+    <>
       <form onSubmit={handleSubmit}>
+
+        <div className="px-4">
+          <h1 className="my-4 text-2xl font-semibold">
+            Puzzle at {id} ✏️
+          </h1>
+        </div>
         
         {/* Result message */}
         {done && (
-          <div className="my-4">
+          <div className="px-4">
             {cells.flat()
               .filter(item => item.value != item.q).length > 0 ? (
-                <p className="text-red-400">
+                <p className="my-4 text-red-400">
                   Oops! Try later 🥲
                 </p>
               ) : (
-                <p className="text-blue-400">
+                <p className="my-4 text-blue-400">
                   You did it! 🎉
                 </p>
               )}
@@ -105,37 +115,71 @@ export default function Puzzle({ initialCells }) {
         )}
         
         {/* Board */}
-        <table className="w-full">
-          <tbody className="bg-gray-100 border-2 border-gray-200 divide-y-2 divide-gray-200">
-            {cells.map((row, r) => (
-              <tr 
-                key={r} 
-                className="grid divide-x-2 divide-gray-200"
-                style={{ gridTemplateColumns: `repeat(${cells.length}, minmax(0, 1fr))` }}
-              >
-                {row.map((col, c) => (
-                  <Cell
-                    key={c}
-                    id={col.id}
-                    available={col.value}
-                    label={col.label}
-                    value={done ? col.value : col.q}
-                    acrossActive={!vertical && (r == currentCrds[0] && c == currentCrds[1])}
-                    downActive={vertical && (r == currentCrds[0] && c == currentCrds[1])}
-                    error={done && (col.value != col.q)}
-                    disabled={done}
-                    handleClick={() => inputClicked(r, c)}
-                  />
-                ))}
-              </tr>
+        <section className="flex justify-center">
+          <table className="w-2xs">
+            <tbody className="bg-black border-2 divide-y-2">
+              {cells.map((row, r) => (
+                <tr 
+                  key={r} 
+                  className="grid divide-x-2"
+                  style={{ gridTemplateColumns: `repeat(${cells.length}, minmax(0, 1fr))` }}
+                >
+                  {row.map((col, c) => (
+                    <Cell
+                      key={c}
+                      id={col.id}
+                      available={col.value}
+                      label={col.label}
+                      value={done ? col.value : col.q}
+                      acrossActive={!vertical && (r == currentCrds[0] && c == currentCrds[1])}
+                      downActive={vertical && (r == currentCrds[0] && c == currentCrds[1])}
+                      error={done && (col.value != col.q)}
+                      disabled={done}
+                      handleClick={() => inputClicked(r, c)}
+                    />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+      <section className="mt-4 px-4">
+        <h3 className="my-4 text-xl font-semibold">
+          Across
+        </h3>
+        <ul>
+          {captions.filter(caption => caption.across)
+            .map(caption => (
+              <li key={caption.id}>
+                <span className="mr-2 font-semibold">
+                  {caption.label}
+                </span>
+                 {caption.acrossValue}
+              </li>
             ))}
-          </tbody>
-        </table>
+        </ul>
+
+        <h3 className="my-4 text-xl font-semibold">
+          Down
+        </h3>
+        <ul>
+          {captions.filter(caption => caption.down)
+            .map(caption => (
+              <li key={caption.id}>
+                <span className="mr-2 font-semibold">
+                  {caption.label}
+                </span>
+                {caption.downValue}
+              </li>
+            ))}
+        </ul>
+      </section>
 
       {!done && (
-        <div className="mt-8">
+        <div className="mt-8 px-4">
           <button className="px-2 py-1 bg-black text-white font-semibold rounded">
-            Done
+            I'm Done
           </button>
         </div>
       )}
@@ -148,6 +192,6 @@ export default function Puzzle({ initialCells }) {
         keyClicked={keyClicked}
         modalClosed={modalClosed} 
       />
-    </div>
+    </>
   )
 }

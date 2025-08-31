@@ -22,22 +22,26 @@ export default function Keyboard({
   }
   
   return (
-    <div className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} border-t-4 transition-all z-20`}>
-      <div className="bg-gray-100 flex justify-center">
+    <div className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} transition-all z-20`}>
+      
+      {/* Keyboard and background */}
+      <div className="bg-black/[.2] flex justify-center">
         <div className="w-xl grid grid-cols-6 gap-2 px-4 py-8">
           {keys.map(key => (
             <button
               key={key}
-              className={`p-2 ${key == 'del' ? 'bg-red-300 text-white' : 'bg-white'} rounded-lg font-semibold`}
+              className={`p-2 ${key == 'del' ? 'bg-red-300 text-white' : 'bg-white'} rounded font-semibold`}
               onClick={() => keyClicked(key)}
             >
-              {key}
+              {key} 
             </button>
           ))}
         </div>
       </div>
+
+      {/* Bottom bar */}
       <button 
-        className="w-full h-full bg-black" 
+        className="w-full h-full bg-white" 
         onClick={handleClick}
       >
       </button>

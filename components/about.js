@@ -10,7 +10,7 @@ export default function About() {
     <div className="flex justify-end">
       <div id="drop-container" className="relative">
         <button
-          className="p-1 text-gray-400 font-semibold cursor-pointer"
+          className="px-2 py-1 text-gray-400 font-semibold cursor-pointer"
           onClick={() => setActive(!active)}
         >
           About
@@ -23,9 +23,10 @@ export default function About() {
               alt="avatar"
             />
             <p className="my-2 text-blue-400">tvvmvn@gmail.com</p>
-            Hi there! Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+            Hi there! My name is Taemin and I'm dev from Korea.
+            I made this Website to help those who are learning Korean language.
+            I tried to put ordinary words in puzzle to make this helpful.
+            Thank you for loving Korean culture!
           </div>
         )}
       </div>

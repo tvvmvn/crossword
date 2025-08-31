@@ -19,44 +19,17 @@ export default async function Page({ params }) {
 
   return (
     <>
-      <div className="px-4">
-        <p className="my-4">
-          <Link href="/" className="">
-            ← Back
-          </Link>
-        </p>
-        <h1 className="my-4 text-2xl font-semibold">
-          Puzzle at {post.id} ✏️
-        </h1>
-      </div>
-
-      <Puzzle initialCells={post.cells} />
-
-      <section className="mt-8 px-4">
-        <h3 className="my-4 text-xl font-semibold">
-          Across
-        </h3>
-        <ul>
-          {post.captions.filter(caption => caption.across)
-            .map(caption => (
-              <li key={caption.id}>
-                {caption.label}. {caption.acrossValue}
-              </li>
-            ))}
-        </ul>
-
-        <h3 className="my-4 text-xl font-semibold">
-          Down
-        </h3>
-        <ul>
-          {post.captions.filter(caption => caption.down)
-            .map(caption => (
-              <li key={caption.id}>
-                {caption.label}. {caption.downValue}
-              </li>
-            ))}
-        </ul>
-      </section>
+      <p className="my-4">
+        <Link href="/" className="px-4">
+          ← Back
+        </Link>
+      </p>
+      
+      <Puzzle 
+        id={post.id}
+        initialCells={post.cells} 
+        captions={post.captions}
+      />
     </>
   )
 }
