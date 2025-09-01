@@ -115,14 +115,14 @@ export default function Puzzle({
         )}
         
         {/* Board */}
-        <section className="flex justify-center">
-          <table className="w-2xs">
+        <section className="px-4 flex justify-center">
+          <table style={{ width: `${cells[0].length * 3}rem` }}>
             <tbody className="bg-black border-2 divide-y-2">
               {cells.map((row, r) => (
                 <tr 
                   key={r} 
                   className="grid divide-x-2"
-                  style={{ gridTemplateColumns: `repeat(${cells.length}, minmax(0, 1fr))` }}
+                  style={{ gridTemplateColumns: `repeat(${cells[r].length}, minmax(0, 1fr))` }}
                 >
                   {row.map((col, c) => (
                     <Cell

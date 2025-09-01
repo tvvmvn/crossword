@@ -3,6 +3,7 @@ import { useState } from "react";
 function initKeyboard(values) {
   return values
     .filter((val, i, arr) => val && arr.indexOf(val) == i)
+    .sort()
     .concat('del')
 }
 

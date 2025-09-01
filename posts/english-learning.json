@@ -1,0 +1,626 @@
+{
+  "id": "english-learning",
+  "cells": [
+    [
+      {
+        "id": "d00",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d01",
+        "label": 1,
+        "across": true,
+        "acrossWord": "oracle",
+        "down": true,
+        "downWord": "offend",
+        "crossed": true,
+        "value": "o",
+        "q": ""
+      },
+      {
+        "id": "d02",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "r",
+        "q": ""
+      },
+      {
+        "id": "d03",
+        "label": 2,
+        "across": null,
+        "acrossWord": "",
+        "down": true,
+        "downWord": "axis",
+        "crossed": true,
+        "value": "a",
+        "q": ""
+      },
+      {
+        "id": "d04",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "c",
+        "q": ""
+      },
+      {
+        "id": "d05",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "l",
+        "q": ""
+      },
+      {
+        "id": "d06",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "e",
+        "q": ""
+      },
+      {
+        "id": "d07",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      }
+    ],
+    [
+      {
+        "id": "d10",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d11",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "f",
+        "q": ""
+      },
+      {
+        "id": "d12",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d13",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "x",
+        "q": ""
+      },
+      {
+        "id": "d14",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d15",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d16",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d17",
+        "label": 3,
+        "across": null,
+        "acrossWord": "",
+        "down": true,
+        "downWord": "elect",
+        "crossed": false,
+        "value": "e",
+        "q": ""
+      }
+    ],
+    [
+      {
+        "id": "d20",
+        "label": 4,
+        "across": true,
+        "acrossWord": "official",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "o",
+        "q": ""
+      },
+      {
+        "id": "d21",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": true,
+        "value": "f",
+        "q": ""
+      },
+      {
+        "id": "d22",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "f",
+        "q": ""
+      },
+      {
+        "id": "d23",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": true,
+        "value": "i",
+        "q": ""
+      },
+      {
+        "id": "d24",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "c",
+        "q": ""
+      },
+      {
+        "id": "d25",
+        "label": 5,
+        "across": null,
+        "acrossWord": "",
+        "down": true,
+        "downWord": "iss",
+        "crossed": true,
+        "value": "i",
+        "q": ""
+      },
+      {
+        "id": "d26",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "a",
+        "q": ""
+      },
+      {
+        "id": "d27",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": true,
+        "value": "l",
+        "q": ""
+      }
+    ],
+    [
+      {
+        "id": "d30",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d31",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "e",
+        "q": ""
+      },
+      {
+        "id": "d32",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d33",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "s",
+        "q": ""
+      },
+      {
+        "id": "d34",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d35",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "s",
+        "q": ""
+      },
+      {
+        "id": "d36",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d37",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "e",
+        "q": ""
+      }
+    ],
+    [
+      {
+        "id": "d40",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d41",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "n",
+        "q": ""
+      },
+      {
+        "id": "d42",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d43",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d44",
+        "label": 6,
+        "across": true,
+        "acrossWord": "vs",
+        "down": true,
+        "downWord": "vr",
+        "crossed": true,
+        "value": "v",
+        "q": ""
+      },
+      {
+        "id": "d45",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": true,
+        "value": "s",
+        "q": ""
+      },
+      {
+        "id": "d46",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d47",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "c",
+        "q": ""
+      }
+    ],
+    [
+      {
+        "id": "d50",
+        "label": 7,
+        "across": true,
+        "acrossWord": "md",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "m",
+        "q": ""
+      },
+      {
+        "id": "d51",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": true,
+        "value": "d",
+        "q": ""
+      },
+      {
+        "id": "d52",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d53",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d54",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "r",
+        "q": ""
+      },
+      {
+        "id": "d55",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d56",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "",
+        "q": ""
+      },
+      {
+        "id": "d57",
+        "label": null,
+        "across": null,
+        "acrossWord": "",
+        "down": null,
+        "downWord": "",
+        "crossed": false,
+        "value": "t",
+        "q": ""
+      }
+    ]
+  ],
+  "captions": [
+    {
+      "id": "c0",
+      "label": 1,
+      "across": true,
+      "acrossWord": "oracle",
+      "acrossValue": "신탁",
+      "down": true,
+      "downWord": "offend",
+      "downValue": "기분을 상하게 하다",
+      "acrossError": false,
+      "downError": false
+    },
+    {
+      "id": "c1",
+      "label": 2,
+      "across": null,
+      "acrossWord": "",
+      "acrossValue": "",
+      "down": true,
+      "downWord": "axis",
+      "downValue": "(회전체의) 축",
+      "downError": false
+    },
+    {
+      "id": "c2",
+      "label": 3,
+      "across": null,
+      "acrossWord": "",
+      "acrossValue": "",
+      "down": true,
+      "downWord": "elect",
+      "downValue": "선출하다. 선출되다의 수동태(-ed)로 자주 쓰임.",
+      "downError": false
+    },
+    {
+      "id": "c3",
+      "label": 4,
+      "across": true,
+      "acrossWord": "official",
+      "acrossValue": "공무원",
+      "down": null,
+      "downWord": "",
+      "downValue": "",
+      "acrossError": false
+    },
+    {
+      "id": "c4",
+      "label": 5,
+      "across": null,
+      "acrossWord": "",
+      "acrossValue": "",
+      "down": true,
+      "downWord": "iss",
+      "downValue": "국제 우주 정거장의 약자",
+      "downError": false
+    },
+    {
+      "id": "c5",
+      "label": 6,
+      "across": true,
+      "acrossWord": "vs",
+      "acrossValue": "(경기 등에서) 대(versus)의 약자. 예) 일본 대 한국 경기",
+      "down": true,
+      "downWord": "vr",
+      "downValue": "가상 현실의 약자",
+      "acrossError": false,
+      "downError": false
+    },
+    {
+      "id": "c6",
+      "label": 7,
+      "across": true,
+      "acrossWord": "md",
+      "acrossValue": "판매 촉진 담당자의 약자",
+      "down": null,
+      "downWord": "",
+      "downValue": "",
+      "acrossError": false
+    }
+  ]
+}
