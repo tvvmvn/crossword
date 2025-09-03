@@ -19,29 +19,41 @@ export default function Layout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="bg-gray-100">
+        <div className="bg-black">
           <div className="max-w-xl mx-auto bg-white">
             
-            {/* Advertise */}
+            {/* Ad */}
             <ins
               className="kakao_ad_area"
               style={{ display: "none" }}
               data-ad-unit="DAN-aOZndUWesDghXUKx"
               data-ad-width="320"
               data-ad-height="50"
-            ></ins>
-            <Script
-              type="text/javascript"
-              src="//t1.daumcdn.net/kas/static/ba.min.js"
-              async
-            />
+            >
+            </ins>
 
             {/* Main */}
             <main className="min-h-screen">
               {children}
             </main>
 
-            <footer className="p-8"></footer>
+            {/* Ad */}
+            <section className="mt-12">
+              <ins 
+                className="kakao_ad_area" 
+                style={{ display: "none" }}
+                data-ad-unit="DAN-oNIi2UgP1XBkgYSj"
+                data-ad-width="320"
+                data-ad-height="100"
+              >
+              </ins>
+            </section>
+
+            <Script
+              type="text/javascript"
+              src="//t1.daumcdn.net/kas/static/ba.min.js"
+              async
+            />
           </div>
         </div>
       </body>

@@ -3,6 +3,14 @@
 import { useState } from "react";
 import Keyboard from "./keyboard";
 import Cell from "./cell";
+import CaptionGroup from "./captionGroup";
+
+const FILTER_MAP = {
+  ACROSS: caption => caption.across,
+  DOWN: caption => caption.down
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 export default function Puzzle({ 
   id,
@@ -88,13 +96,20 @@ export default function Puzzle({
     setTyping(false)
   }
 
+  const captionGroups = FILTER_NAMES.map(name => (
+    <CaptionGroup 
+      key={name}
+      name={name}
+      captions={captions.filter(FILTER_MAP[name])}
+    />
+  ))
+
   return (
     <>
       <form onSubmit={handleSubmit}>
-
         <div className="px-4">
           <h1 className="my-4 text-2xl font-semibold">
-            Puzzle at {id} ✏️
+            {id} ✏️
           </h1>
         </div>
         
@@ -115,65 +130,35 @@ export default function Puzzle({
         )}
         
         {/* Board */}
-        <section className="px-4 flex justify-center">
-          <table style={{ width: `${cells[0].length * 3}rem` }}>
-            <tbody className="bg-black border-2 divide-y-2">
-              {cells.map((row, r) => (
-                <tr 
-                  key={r} 
-                  className="grid divide-x-2"
-                  style={{ gridTemplateColumns: `repeat(${cells[r].length}, minmax(0, 1fr))` }}
-                >
-                  {row.map((col, c) => (
-                    <Cell
-                      key={c}
-                      id={col.id}
-                      available={col.value}
-                      label={col.label}
-                      value={done ? col.value : col.q}
-                      acrossActive={!vertical && (r == currentCrds[0] && c == currentCrds[1])}
-                      downActive={vertical && (r == currentCrds[0] && c == currentCrds[1])}
-                      error={done && (col.value != col.q)}
-                      disabled={done}
-                      handleClick={() => inputClicked(r, c)}
-                    />
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-
-      <section className="mt-4 px-4">
-        <h3 className="my-4 text-xl font-semibold">
-          Across
-        </h3>
-        <ul>
-          {captions.filter(caption => caption.across)
-            .map(caption => (
-              <li key={caption.id}>
-                <span className="mr-2 font-semibold">
-                  {caption.label}
-                </span>
-                 {caption.acrossValue}
-              </li>
+        <table className="w-full">
+          <tbody className="bg-gray-200 border-t-4 border-b-4 divide-y-4">
+            {cells.map((row, r) => (
+              <tr 
+                key={r} 
+                className="grid divide-x-4"
+                style={{ gridTemplateColumns: `repeat(${cells[r].length}, minmax(0, 1fr))` }}
+              >
+                {row.map((col, c) => (
+                  <Cell
+                    key={c}
+                    id={col.id}
+                    available={col.value}
+                    label={col.label}
+                    value={done ? col.value : col.q}
+                    acrossActive={!vertical && (r == currentCrds[0] && c == currentCrds[1])}
+                    downActive={vertical && (r == currentCrds[0] && c == currentCrds[1])}
+                    error={done && (col.value != col.q)}
+                    disabled={done}
+                    handleClick={() => inputClicked(r, c)}
+                  />
+                ))}
+              </tr>
             ))}
-        </ul>
+          </tbody>
+        </table>
 
-        <h3 className="my-4 text-xl font-semibold">
-          Down
-        </h3>
-        <ul>
-          {captions.filter(caption => caption.down)
-            .map(caption => (
-              <li key={caption.id}>
-                <span className="mr-2 font-semibold">
-                  {caption.label}
-                </span>
-                {caption.downValue}
-              </li>
-            ))}
-        </ul>
+      <section className="mt-8 px-4">
+        {captionGroups}
       </section>
 
       {!done && (

@@ -12,13 +12,13 @@ export default function Cell({
 
   function bgColor() {
     if (error) {
-      return "bg-red-100"
+      return "bg-red-200"
     }
     if (acrossActive) {
-      return "bg-blue-100"
+      return "bg-blue-200"
     }
     if (downActive) {
-      return "bg-yellow-100"
+      return "bg-yellow-200"
     }
     return "bg-white"
   }

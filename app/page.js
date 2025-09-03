@@ -14,11 +14,6 @@ export default function Home() {
             Cross <br/> 
             Word+
           </h1>
-          <h3 className="my-4 text-xl font-semibold">
-            Learning Korean 🇰🇷 <br /> 
-            with Crossword Puzzle <br />
-            is FUN!
-          </h3>
         </header>
 
         {/* <div className="mt-4">
@@ -30,21 +25,45 @@ export default function Home() {
         </div> */}
 
 
-        <div className="px-4">
-          <ul className="list-disc mt-8 px-4">
+        <section className="px-4">
+          <h3 className="my-4 text-lg font-semibold">
+            Korean
+          </h3>
+
+          <ul className="list-disc mt-4 px-4">
             {posts
+              .filter(post => post.lang == 'Korean')
               .map(post => (
               <li key={post.id} className="my-2">
                 <Link 
                   href={"/posts/" + post.id}
                   className="underline"
                 >
-                  Puzzle at {post.id}
+                  {post.id}
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+
+          <h3 className="my-4 text-lg font-semibold">
+            English
+          </h3>
+
+          <ul className="list-disc mt-4 px-4">
+            {posts
+              .filter(post => post.lang == 'English')
+              .map(post => (
+              <li key={post.id} className="my-2">
+                <Link 
+                  href={"/posts/" + post.id}
+                  className="underline"
+                >
+                  {post.id}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </>
   )
 }
