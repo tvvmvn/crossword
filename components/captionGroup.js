@@ -2,6 +2,9 @@ export default function CaptionGroup({
   name,
   captions,
 }) {
+  
+  const down = name == 'DOWN';
+  
   return (
     <div>
       <h3 className="my-4 text-xl font-semibold">
@@ -13,7 +16,7 @@ export default function CaptionGroup({
             <span className="mr-2 font-semibold">
               {caption.label}
             </span>
-            {caption.acrossValue || caption.downValue}
+            {down ? caption.downValue : caption.acrossValue}
           </li>
         ))}
       </ul>
