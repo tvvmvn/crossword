@@ -12,16 +12,10 @@ export default function Keyboard({
   values,
   typing,
   keyClicked,
-  modalClosed
+  modalClosed,
 }) {
   
   const [keys, setKeys] = useState(initKeyboard(values));
-
-  function handleClick(e) {
-    if (e.target == e.currentTarget) {
-    }
-    modalClosed()
-  }
   
   return (
     <div className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} transition-all z-20`}>
@@ -45,7 +39,7 @@ export default function Keyboard({
       <div className="w-full h-full flex justify-center backdrop-blur-md"> 
         <div 
           className="w-xl flex justify-end px-12"
-          onClick={handleClick}
+          onClick={modalClosed}
         >
           {/* <span className="mt-4 w-16 h-1 bg-black"></span> */}
         </div>

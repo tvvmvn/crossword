@@ -32,7 +32,7 @@ export default function Home() {
 
           <ul className="list-disc mt-4 px-4">
             {posts
-              .filter(post => post.lang == 'Korean')
+              .filter(post => post.lang == 'ko')
               .map(post => (
               <li key={post.id} className="my-2">
                 <Link 
@@ -51,7 +51,7 @@ export default function Home() {
 
           <ul className="list-disc mt-4 px-4">
             {posts
-              .filter(post => post.lang == 'English')
+              .filter(post => post.lang == 'en')
               .map(post => (
               <li key={post.id} className="my-2">
                 <Link 

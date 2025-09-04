@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Keyboard from "./keyboard";
 import Cell from "./cell";
 import CaptionGroup from "./captionGroup";
@@ -24,7 +24,7 @@ export default function Puzzle({
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false)
 
-  console.log(cells)
+  // console.log(cells)
 
   function handleSubmit(e) {
     e.preventDefault();

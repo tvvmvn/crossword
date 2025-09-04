@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import Head from "next/head";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -8,8 +9,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "K-Crossword",
-  description: "Learning Korean is FUN with Crossword Puzzle!",
+  title: "Crossword (십자말풀이)",
+  description: "십자말풀이로 재밌게하는 단어/교양 공부!",
   verification: {
     google: "yLKrPSBUo6umY7XBmdKI72TM2LMwY0kmDtvgv6P24e8" 
   }
@@ -18,7 +19,20 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body> 
+        {/* Google tag (gtag.js) */}
+        <Script 
+          async 
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZJJ7ZB4EBV" 
+        />
+        <Script>{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-ZJJ7ZB4EBV');
+        `}</Script>
+
         <div className="bg-black">
           <div className="max-w-xl mx-auto bg-white">
             
