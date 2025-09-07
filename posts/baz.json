@@ -1,5 +1,5 @@
 {
-  "id": "foo",
+  "id": "baz",
   "lang": "ko",
   "cells": [
     [
@@ -17,7 +17,7 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "기",
+        "value": "비",
         "q": "",
         "active": true
       },
@@ -32,30 +32,30 @@
       },
       {
         "id": "cell03",
-        "label": null,
-        "across": null,
-        "down": null,
-        "value": "",
+        "label": 2,
+        "across": true,
+        "down": true,
+        "value": "주",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell04",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "인",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell05",
-        "label": null,
+        "label": 3,
         "across": null,
-        "down": null,
-        "value": "",
+        "down": true,
+        "value": "공",
         "q": "",
-        "active": false
+        "active": true
       }
     ],
     [
@@ -79,21 +79,21 @@
       },
       {
         "id": "cell12",
-        "label": null,
-        "across": null,
-        "down": null,
-        "value": "",
+        "label": 4,
+        "across": true,
+        "down": true,
+        "value": "고",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell13",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "민",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell14",
@@ -109,15 +109,15 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "공",
         "q": "",
-        "active": false
+        "active": true
       }
     ],
     [
       {
         "id": "cell20",
-        "label": 2,
+        "label": 5,
         "across": true,
         "down": null,
         "value": "이",
@@ -126,7 +126,7 @@
       },
       {
         "id": "cell21",
-        "label": 3,
+        "label": 6,
         "across": null,
         "down": true,
         "value": "야",
@@ -153,21 +153,21 @@
       },
       {
         "id": "cell24",
-        "label": null,
-        "across": null,
-        "down": null,
-        "value": "",
+        "label": 7,
+        "across": true,
+        "down": true,
+        "value": "부",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell25",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "재",
         "q": "",
-        "active": false
+        "active": true
       }
     ],
     [
@@ -212,9 +212,9 @@
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "서",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell35",
@@ -238,30 +238,30 @@
       },
       {
         "id": "cell41",
-        "label": null,
-        "across": null,
+        "label": 8,
+        "across": true,
         "down": null,
-        "value": "",
+        "value": "장",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell42",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "식",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell43",
-        "label": null,
+        "label": 9,
         "across": null,
-        "down": null,
-        "value": "",
+        "down": true,
+        "value": "품",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell44",
@@ -312,30 +312,30 @@
       },
       {
         "id": "cell53",
-        "label": null,
-        "across": null,
+        "label": 10,
+        "across": true,
         "down": null,
-        "value": "",
+        "value": "목",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell54",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "걸",
         "q": "",
-        "active": false
+        "active": true
       },
       {
         "id": "cell55",
         "label": null,
         "across": null,
         "down": null,
-        "value": "",
+        "value": "이",
         "q": "",
-        "active": false
+        "active": true
       }
     ]
   ],
@@ -344,21 +344,21 @@
       "id": "cp0",
       "label": 1,
       "across": true,
-      "acrossWord": "고기",
-      "acrossValue": "meat",
+      "acrossWord": "고비",
+      "acrossValue": "a",
       "down": true,
       "downWord": "고양이",
-      "downValue": "meow"
+      "downValue": "h"
     },
     {
       "id": "cp1",
       "label": 2,
       "across": true,
-      "acrossWord": "이야기",
-      "acrossValue": "story",
-      "down": false,
-      "downWord": "",
-      "downValue": ""
+      "acrossWord": "주인공",
+      "acrossValue": "b",
+      "down": true,
+      "downWord": "주민",
+      "downValue": "i"
     },
     {
       "id": "cp2",
@@ -367,8 +367,78 @@
       "acrossWord": "",
       "acrossValue": "",
       "down": true,
-      "downWord": "야구",
-      "downValue": "baseball"
+      "downWord": "공공재",
+      "downValue": "j"
+    },
+    {
+      "id": "cp3",
+      "label": 4,
+      "across": true,
+      "acrossWord": "고민",
+      "acrossValue": "c",
+      "down": true,
+      "downWord": "고기",
+      "downValue": "k"
+    },
+    {
+      "id": "cp4",
+      "label": 5,
+      "across": true,
+      "acrossWord": "이야기",
+      "acrossValue": "d",
+      "down": false,
+      "downWord": "",
+      "downValue": ""
+    },
+    {
+      "id": "cp5",
+      "label": 6,
+      "across": false,
+      "acrossWord": "",
+      "acrossValue": "",
+      "down": true,
+      "downWord": "야구장",
+      "downValue": "l"
+    },
+    {
+      "id": "cp6",
+      "label": 7,
+      "across": true,
+      "acrossWord": "부재",
+      "acrossValue": "e",
+      "down": true,
+      "downWord": "부서",
+      "downValue": "m"
+    },
+    {
+      "id": "cp7",
+      "label": 8,
+      "across": true,
+      "acrossWord": "장식품",
+      "acrossValue": "f",
+      "down": false,
+      "downWord": "",
+      "downValue": ""
+    },
+    {
+      "id": "cp8",
+      "label": 9,
+      "across": false,
+      "acrossWord": "",
+      "acrossValue": "",
+      "down": true,
+      "downWord": "품목",
+      "downValue": "n"
+    },
+    {
+      "id": "cp9",
+      "label": 10,
+      "across": true,
+      "acrossWord": "목걸이",
+      "acrossValue": "g",
+      "down": false,
+      "downWord": "",
+      "downValue": ""
     }
   ]
 }

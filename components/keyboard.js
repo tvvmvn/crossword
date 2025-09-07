@@ -1,48 +1,46 @@
-import { useState } from "react";
 import { ChevronLeft } from "@deemlol/next-icons";
 
-function initKeyboard(values) {
-  return values
-    .filter((val, i, arr) => val && arr.indexOf(val) == i)
-    .sort()
-    .concat('del')
-}
-
 export default function Keyboard({ 
-  values,
+  keys,
   typing,
   keyClicked,
   modalClosed,
 }) {
-  
-  const [keys, setKeys] = useState(initKeyboard(values));
+
+  function handleClick(e) {
+    if (e.target == e.currentTarget) {
+      modalClosed()
+    }
+  }
   
   return (
-    <div className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} transition-all z-20`}>
-      
+    <div 
+      className={`fixed w-full h-[35vh] left-0 ${typing ? 'bottom-0' : '-bottom-[40vh]'} bg-gray-200 transition-all z-20`}
+      onClick={handleClick}
+    >
       {/* Keyboard and background */}
-      <div className="flex justify-center bg-gray-100">
-        <div className="w-xl grid grid-cols-6 gap-2 px-4 py-8">
-          {keys.map(key => (
-            <button
-              key={key}
-              className={`p-2 flex justify-center items-center ${key == 'del' ? 'bg-red-300' : 'bg-white'} rounded font-semibold`}
-              onClick={() => keyClicked(key)}
-            >
-              {key == 'del' ? <ChevronLeft size={20} color="#fff" /> : key} 
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom bar */}
-      <div className="w-full h-full flex justify-center backdrop-blur-md"> 
-        <div 
-          className="w-xl flex justify-end px-12"
-          onClick={modalClosed}
-        >
-          {/* <span className="mt-4 w-16 h-1 bg-black"></span> */}
-        </div>
+      <div className="h-[28vh] flex justify-center bg-white">
+        <table className="w-xl table-fixed">
+          <tbody className="divide-y divide-gray-200">
+            {keys.map((row, r) => (
+              <tr key={r} className="h-1/4">
+                {row.map((col, c) => (
+                  <td 
+                    key={c} 
+                    className="relative"
+                    onClick={col ? () => keyClicked(col) : null}
+                  >
+                    <span className="absolute inset-0 flex justify-center items-center font-semibold">
+                      {col == 'del' ? (
+                        <ChevronLeft />
+                      ) : col}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   )

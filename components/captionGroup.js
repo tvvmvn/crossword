@@ -3,7 +3,7 @@ export default function CaptionGroup({
   captions,
 }) {
   
-  const down = name == 'DOWN';
+  const isDownCaption = name == 'DOWN';
   
   return (
     <div>
@@ -16,7 +16,7 @@ export default function CaptionGroup({
             <span className="mr-2 font-semibold">
               {caption.label}
             </span>
-            {down ? caption.downValue : caption.acrossValue}
+            {isDownCaption ? caption.downValue : caption.acrossValue}
           </li>
         ))}
       </ul>
