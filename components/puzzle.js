@@ -7,8 +7,8 @@ import Keyboard from "./keyboard";
 import Row from "./row";
 
 const FILTER_MAP = {
-  ACROSS: caption => caption.across,
-  DOWN: caption => caption.down
+  가로: caption => caption.across,
+  세로: caption => caption.down
 };
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
@@ -109,11 +109,11 @@ export default function Puzzle({
               .filter(item => item.active)
               .filter(item => item.value != item.q).length ? (
               <p className="my-4 text-red-400">
-                Oops! Try later 🥲
+                아쉬워요 🥲
               </p>
             ) : (
               <p className="my-4 text-blue-400">
-                You did it! 🎉
+                축하합니다 🎉
               </p>
             )}
           </div>
@@ -135,7 +135,7 @@ export default function Puzzle({
         {!done && (
           <div className="mt-8 px-4">
             <button className="px-2 py-1 bg-black text-white font-semibold rounded">
-              I'm Done
+              제출하기
             </button>
           </div>
         )}

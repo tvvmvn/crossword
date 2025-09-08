@@ -3,7 +3,7 @@ export default function CaptionGroup({
   captions,
 }) {
   
-  const isDownCaption = name == 'DOWN';
+  const isDownCaption = name == '세로';
   
   return (
     <div>
