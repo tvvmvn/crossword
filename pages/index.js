@@ -33,7 +33,7 @@ export async function getStaticProps() {
       d: JSON.parse(JSON.stringify(result[0])),
       clock: new Date().toUTCString(),
     },
-    revalidate: 60 * 5, // every 5 minutes
+    revalidate: 60 * 5 * 12, // every an hour
   }
 }
 
