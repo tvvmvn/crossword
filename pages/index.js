@@ -12,7 +12,8 @@ export async function getStaticProps() {
     
     db = new Database(process.env.SQLITECLOUD_URL);
 
-    const id = d.getMinutes() || 60
+    const id = d.getDay() || 7
+    console.log(d.getDay())
     
     result = await db.sql(`
       USE DATABASE crossword_db.db;
@@ -26,19 +27,17 @@ export async function getStaticProps() {
     db?.close()
   }
 
-  console.log(new Date().getMinutes())
-
   return {
     props: {
-      d: JSON.parse(JSON.stringify(result[0])),
+      word: JSON.parse(JSON.stringify(result[0])),
       clock: new Date().toUTCString(),
     },
-    revalidate: 60 * 5 * 12, // every an hour
+    revalidate: 60 * 5 * 12 * 24, // every day
   }
 }
 
-export default function Home({ d, clock }) {
-  console.log(d)
+export default function Home({ word, clock }) {
+  console.log(word)
 
   return (
     <div className="px-4">
@@ -47,7 +46,7 @@ export default function Home({ d, clock }) {
       </h1>
 
       <p className="my-4">
-        <b>{d.id}</b> {d.name} {d.meaning}
+        <b>{word.id}</b> {word.name} {word.meaning}
       </p>
     </div>
   )
