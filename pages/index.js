@@ -1,53 +1,84 @@
-import { Database } from "@sqlitecloud/drivers";
-import { unstable_noStore as noStore } from "next/cache";
+import { createPuzzle } from "@/lib/service"
 
 export async function getStaticProps() {
   
-  let db;
-  let result;
-  let d = new Date();
-
-  try {
-    // noStore(); // Prevents Next.js from caching the database request
-    
-    db = new Database(process.env.SQLITECLOUD_URL);
-
-    const id = d.getDay() || 7
-    console.log(d.getDay())
-    
-    result = await db.sql(`
-      USE DATABASE crossword_db.db;
-      SELECT * FROM words WHERE id=${id}
-    `);
-
-    console.log(result)
-  } catch (ex) {
-    console.error(ex)
-  } finally {
-    db?.close()
-  }
-
+  const puzzle = await createPuzzle()
+  console.log(puzzle)
+  
   return {
     props: {
-      word: JSON.parse(JSON.stringify(result[0])),
-      clock: new Date().toUTCString(),
+      puzzle: JSON.parse(JSON.stringify(puzzle)),
+      clock: new Date().toUTCString()
     },
-    revalidate: 60 * 5 * 12 * 24, // every day
+    revalidate: 60 * 10 // every 10 minutes 
   }
 }
 
-export default function Home({ word, clock }) {
-  console.log(word)
+const FILTER_MAP = {
+  ACROSS: (caption) => !caption.down,
+  DOWN: (caption) => caption.down
+}
+
+const FILTER_NAMES = Object.keys(FILTER_MAP)
+
+export default function Home({ puzzle, clock }) {
+  
+  console.log(puzzle)
+  const { board, captions } = puzzle;
 
   return (
     <div className="px-4">
       <h1 className="my-4 font-semibold">
-        {clock} (Server time)
+        {clock}
       </h1>
 
-      <p className="my-4">
-        <b>{word.id}</b> {word.name} {word.meaning}
-      </p>
+      <table className="w-full table-fixed">
+        <tbody className="border divide-y">
+          {board.map((row, r) => (
+            <tr key={r} className="divide-x grid grid-cols-8">
+              {row.map((col, c) => (
+                <td key={c} className="relative pt-[100%] bg-gray-200">
+                  {col.active && (
+                    <>
+                      {!!col.label && (
+                        <label 
+                          htmlFor={col.id}
+                          className="absolute top-0 left-0 px-1 font-semibold z-10"
+                        >
+                          {col.label}
+                        </label>
+                      )}
+                      <input 
+                        id={col.id}
+                        type="text" 
+                        className="absolute inset-0 bg-white text-center outline-none"
+                        value={col.value}
+                        readOnly
+                      />
+                    </>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {FILTER_NAMES.map(name => (
+        <section key={name}>
+          <h3 className="my-4 font-semibold">
+            {name}
+          </h3>
+
+          <ul>
+            {captions.filter(FILTER_MAP[name]).map(caption => (
+              <li key={caption.word}>
+                {caption.label}. {caption.content}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
-  )
+  )  
 }
