@@ -9,7 +9,7 @@ export async function getStaticProps() {
   return {
     props: {
       puzzle: JSON.parse(JSON.stringify(puzzle)),
-      d: new Date().toLocaleString()
+      d: new Date().toUTCString()
     },
     revalidate: 60 * 10 // every 10 minutes 
   }
