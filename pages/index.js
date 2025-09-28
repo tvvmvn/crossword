@@ -9,20 +9,20 @@ export async function getStaticProps() {
   return {
     props: {
       puzzle: JSON.parse(JSON.stringify(puzzle)),
-      clock: new Date().toUTCString()
+      d: new Date().toLocaleString()
     },
     revalidate: 60 * 10 // every 10 minutes 
   }
 }
 
-export default function Home({ puzzle, clock }) {
+export default function Home({ puzzle, d }) {
   
   console.log(puzzle)
 
   return (
     <div className="px-4 max-w-sm mx-auto">
       <h1 className="my-4 font-semibold">
-        {clock}
+        {d}
       </h1>
       
       <Puzzle puzzle={puzzle} />

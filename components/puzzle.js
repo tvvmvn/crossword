@@ -1,5 +1,7 @@
 import { useState } from "react"
+import Keyboard from "./keyboard";
 
+// board
 function getAround(currentCrds, board) {
   const [r, c] = currentCrds;
 
@@ -11,6 +13,7 @@ function getAround(currentCrds, board) {
   }
 }
 
+// captions
 const FILTER_MAP = {
   ACROSS: (caption) => !caption.down,
   DOWN: (caption) => caption.down
@@ -18,7 +21,8 @@ const FILTER_MAP = {
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
-function generateKeys(board) {
+// for making keyboard
+function extractValues(board) {
   return board.flat()
     .filter(cell => cell.active)
     .map(cell => cell.value)
@@ -39,12 +43,10 @@ export default function Puzzle({ puzzle }) {
   const [downward, setDownward] = useState(false)
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
-  const klines = Math.ceil(generateKeys(board).length / 7);
-
-  console.log(currentCrds)
-
   const errors = board.flat()
     .filter(cell => cell.q != cell.value)
+
+  // console.log(currentCrds)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -117,18 +119,19 @@ export default function Puzzle({ puzzle }) {
       return 'bg-emerald-100'
     }
 
+    // active cell
     if (r == currentCrds[0] && c == currentCrds[1]) {
       if (downward) {
         return 'bg-yellow-100'
       }
       return 'bg-blue-100'
     }
+
     return 'bg-white'
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      
       {/* result messages */}
       {done && (
         <p className="my-4">
@@ -207,38 +210,13 @@ export default function Puzzle({ puzzle }) {
         </p>
       )}
 
-      {/* 
-        virtual keyboard 
-
-        height for each key: 8vh
-        keyboard height: each key height * line count of keys
-        bottom rest: 4vh
-      */}
-      <div 
-        className={`fixed left-0 bottom-0 bg-black/[0.2] w-full px-4 transition-all`}
-        style={{ 
-          height: (klines * 8) + 4 + 'vh',
-          bottom: typing ? '0' : `-${(klines * 10) + 5}vh`
-        }}
-        onClick={(e) => {
-          if (e.target == e.currentTarget) {
-            setTyping(false)
-          }
-        }}
-      >
-        <ul className="max-w-sm mx-auto grid grid-cols-7 border">
-          {generateKeys(board).map(key => (
-            <li 
-              key={key}
-              className={`h-[8vh] bg-white flex justify-center items-center ${key == 'del' && 'text-red-400'}`}
-              onClick={() => keyClicked(key)}
-            >
-              {key}
-            </li>
-            ))}
-        </ul>
-        <p></p>
-      </div>
+      {/* virtual keyboard */}
+      <Keyboard
+        values={extractValues(board)}
+        typing={typing}
+        setTyping={setTyping}
+        keyClicked={keyClicked}
+      />
     </form>
   )
 }
