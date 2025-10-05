@@ -30,7 +30,7 @@ export default function Puzzle({ puzzle }) {
     const [r, c] = newCrds;
 
     // set direction to move
-    const { top, bottom, left, right } = board[r][c];
+    const { top, bottom, left, right } = board[r][c].around;
     
     const across = left || right
     const down = top || bottom
@@ -66,7 +66,7 @@ export default function Puzzle({ puzzle }) {
     setBoard(updatedBoard)
     
     // move
-    const { top, bottom, left, right } = board[r][c];
+    const { top, bottom, left, right } = board[r][c].around;
     const backspace = key == 'del';
     
     const west = !downward && backspace && left;

@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export async function getStaticProps() {
   
-  const puzzle = createPuzzle()
+  const puzzle = await createPuzzle()
   console.log(puzzle)
   
   return {
@@ -15,7 +15,7 @@ export async function getStaticProps() {
       puzzle: JSON.parse(JSON.stringify(puzzle)),
       d: new Date().toLocaleDateString()
     },
-    revalidate: 60 * 10 // every 10 minutes 
+    revalidate: 60 * 5 * 12 // every an hour
   }
 }
 
