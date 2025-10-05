@@ -1,30 +1,15 @@
-
-function generateKeyboard(values) {
-  let keyboard = []
-  for (let r = 0; r < 4; r++) {
-    keyboard[r] = []
-    for (let c = 0; c < 7; c++) {
-      let x = (r * 7) + c;
-
-      if (x < values.length) {
-        keyboard[r][c] = values[x]
-      } else {
-        keyboard[r][c] = ''
-      }
-    }
-  }
-  return keyboard;
-}
+const keys = [
+  ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+  ['h', 'i', 'j', 'k', 'l', 'm', 'n'],
+  ['o', 'p', 'q', 'r', 's', 't', 'u'],
+  ['v', 'w', 'x', 'y', 'z', '', 'del'],
+]
 
 export default function Keyboard({
-  values,
   typing,
   setTyping,
   keyClicked
 }) {
-
-  console.log(values)
-  console.log(generateKeyboard(values))
 
   function handleClick(e) {
     if (e.target == e.currentTarget) {
@@ -34,13 +19,13 @@ export default function Keyboard({
 
   return (
     <div
-      className={`fixed left-0 w-full h-[30vh] ${typing ? 'bottom-0' : '-bottom-[30vh]'} bg-black transition-all`}
+      className={`fixed left-0 w-full h-[30vh] ${typing ? 'bottom-0' : '-bottom-[30vh]'} bg-gray-100 transition-all z-90`}
       style={{ boxShadow: '0 0 5px 2px #ddd' }}
       onClick={handleClick}
     >
       <div className="bg-white">
         <div className="max-w-sm mx-auto divide-y divide-gray-200">
-          {generateKeyboard(values).map((row, r) => (
+          {keys.map((row, r) => (
             <div key={r} className="grid grid-cols-7 h-[6vh]">
               {row.map((col, c) => (
                 <button

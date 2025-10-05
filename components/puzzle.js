@@ -1,18 +1,6 @@
 import { useState } from "react"
 import Keyboard from "./keyboard";
 
-// board
-function getAround(currentCrds, board) {
-  const [r, c] = currentCrds;
-
-  return {
-    top: r > 0 && board[r - 1][c].active,
-    bottom: r < board.length - 1 && board[r + 1][c].active,
-    left: c > 0 && board[r][c - 1].active,
-    right: c < board[r].length - 1 && board[r][c + 1].active
-  }
-}
-
 // captions
 const FILTER_MAP = {
   ACROSS: (caption) => !caption.down,
@@ -20,20 +8,6 @@ const FILTER_MAP = {
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
-
-// for making keyboard
-function extractValues(board) {
-  return board.flat()
-    .filter(cell => cell.active)
-    .map(cell => cell.value)
-    .filter((key, i, self) => {
-      if (i == self.indexOf(key)) {
-        return key;
-      }
-    })
-    .sort()
-    .concat('del')
-}
 
 export default function Puzzle({ puzzle }) {
   
@@ -46,18 +20,18 @@ export default function Puzzle({ puzzle }) {
   const errors = board.flat()
     .filter(cell => cell.q != cell.value)
 
-  // console.log(currentCrds)
-
   function handleSubmit(e) {
     e.preventDefault();
 
     setDone(true)
   }
 
-  function handleClick(r, c) {
+  function handleClick(newCrds) {
+    const [r, c] = newCrds;
+
     // set direction to move
-    const { top, bottom, left, right } = getAround([r, c], board);
- 
+    const { top, bottom, left, right } = board[r][c];
+    
     const across = left || right
     const down = top || bottom
 
@@ -74,23 +48,25 @@ export default function Puzzle({ puzzle }) {
       setDownward(true)
     }
     
-    setCurrentCrds([r, c])
+    setCurrentCrds(newCrds)
     setTyping(true)
   }
 
   function keyClicked(key) {
+    const [r, c] = currentCrds;
+
     // update q
-    const updatedBoard = board.map((row, r) => row.map((col, c) => {
-      if (r == currentCrds[0] && c == currentCrds[1]) {
+    const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
+      if (_r == r && _c == c) {
         return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
 
     setBoard(updatedBoard)
-
-    // move 
-    const { top, bottom, left, right } = getAround(currentCrds, board)
+    
+    // move
+    const { top, bottom, left, right } = board[r][c];
     const backspace = key == 'del';
     
     const west = !downward && backspace && left;
@@ -98,8 +74,6 @@ export default function Puzzle({ puzzle }) {
     const north = downward && backspace && top;
     const south = downward && !backspace && bottom;
     
-    const [r, c] = currentCrds;
-
     if (west) {
       setCurrentCrds([r, c - 1])
     } else if (east) {
@@ -116,7 +90,7 @@ export default function Puzzle({ puzzle }) {
       if (q != value) {
         return 'bg-red-100'
       }
-      return 'bg-emerald-100'
+      return 'bg-green-100'
     }
 
     // active cell
@@ -151,10 +125,10 @@ export default function Puzzle({ puzzle }) {
       <table className="w-full table-fixed">
         <tbody className="border divide-y">
           {board.map((row, r) => (
-            <tr key={r} className="divide-x grid grid-cols-8">
+            <tr key={r} className="divide-x grid grid-cols-5">
               {row.map((col, c) => (
-                <td key={c} className="relative pt-[100%] bg-gray-200">
-                  {col.active && (
+                <td key={c} className="relative pt-[100%] bg-black">
+                  {!!col.active && (
                     <>
                       {!!col.label && (
                         <label 
@@ -169,7 +143,7 @@ export default function Puzzle({ puzzle }) {
                         type="text" 
                         className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value)}`}
                         value={done ? col.value : col.q}
-                        onClick={(e) => handleClick(r, c)}
+                        onClick={(e) => handleClick([r, c])}
                         readOnly
                       />
                     </>
@@ -191,7 +165,7 @@ export default function Puzzle({ puzzle }) {
           <ul>
             {captions.filter(FILTER_MAP[name]).map(caption => (
               <li key={caption.id}>
-                {caption.label}. {caption.content}
+                {caption.label}. {caption.meaning}
               </li>
             ))}
           </ul>
@@ -212,7 +186,6 @@ export default function Puzzle({ puzzle }) {
 
       {/* virtual keyboard */}
       <Keyboard
-        values={extractValues(board)}
         typing={typing}
         setTyping={setTyping}
         keyClicked={keyClicked}
