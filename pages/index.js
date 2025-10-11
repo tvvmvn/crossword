@@ -1,13 +1,16 @@
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
+import sql from "@/lib/db"
 import { createPuzzle } from "@/lib/service"
 import { Github, Instagram, Mail } from "@deemlol/next-icons"
 import Link from "next/link"
 
 export async function getStaticProps() {
   
-  const puzzle = await createPuzzle()
+  const words = await sql`SELECT * FROM words`;
+  const puzzle = createPuzzle(words)
+
   console.log(puzzle)
   
   return {
