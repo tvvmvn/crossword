@@ -20,16 +20,16 @@ export default function Keyboard({
   }
 
   return (
-    <div className={`fixed left-0 w-full h-[30vh] ${typing ? 'bottom-0' : '-bottom-[30vh]'} px-4 transition-all z-90`}>
+    <div className={`fixed left-0 w-full h-[240px] ${typing ? 'bottom-0' : '-bottom-[240px]'} px-4 transition-all z-90`}>
       <div className="max-w-sm mx-auto relative ">
         <span 
-          className="absolute text-4xl -top-10 right-0 h-[6-vh] px-2"
+          className="absolute text-4xl -top-10 right-0 px-2"
           onClick={handleClick}
         >
           &times;
         </span>
         <div 
-          className="bg-white h-[25vh] divide-y divide-gray-200"
+          className="bg-white h-[200px] divide-y divide-gray-200"
           style={{ boxShadow: '0 0 5px 2px #ddd' }}
           >
           {keys.map((row, r) => (

@@ -17,7 +17,7 @@ export async function getStaticProps() {
       puzzle: JSON.parse(JSON.stringify(puzzle)),
       d: new Date().toISOString()
     },
-    revalidate: 60 * 5 // every 5 minutes
+    revalidate: 60 * 5 * 12 // every an hour
   }
 }
 
