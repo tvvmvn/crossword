@@ -16,9 +16,9 @@ export async function getStaticProps() {
   return {
     props: {
       puzzle: JSON.parse(JSON.stringify(puzzle)),
-      d: new Date().toLocaleDateString()
+      d: new Date().toISOString()
     },
-    revalidate: 60 * 5 * 12 // every an hour
+    revalidate: 60 * 5 // every 5 minutes
   }
 }
 
@@ -27,11 +27,11 @@ export default function Home({ puzzle, d }) {
   console.log(puzzle)
   
   return (
-    <>
+    <div className="">
       <div className="max-w-sm mx-auto px-4">
         <header className="mt-8">
           <h1 className="text-5xl font-semibold">
-            Crossword 
+            <code>Crossword</code>
           </h1>
           <p className="mt-2">
             {d} 🎸😎
@@ -79,6 +79,6 @@ export default function Home({ puzzle, d }) {
           </section>
         </div>
       </footer>
-    </>
+    </div>
   )
 }

@@ -1,0 +1,6 @@
+# import csv
+\COPY <테이블명> FROM <fullPath>  DELIMITER ',' CSV HEADER;
+
+# 
+\l
+\
