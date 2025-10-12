@@ -3,7 +3,6 @@ import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import sql from "@/lib/db"
 import { createPuzzle } from "@/lib/service"
-import { Github, Instagram, Mail } from "@deemlol/next-icons"
 import Link from "next/link"
 
 export async function getStaticProps() {
@@ -67,13 +66,13 @@ export default function Home({ puzzle, d }) {
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                 </p>
-                <p className="my-4 flex gap-2">
+                {/* <p className="my-4 flex gap-2">
                   <Link href="https://github.com/tvvmvn" target="_blank">
                     <Github size={24} color="#ddd" />
                   </Link>
                   <Instagram size={24} color="#ddd" />
                   <Mail size={24} color="#ddd" />
-                </p>
+                </p> */}
               </div>
             </div>
           </section>

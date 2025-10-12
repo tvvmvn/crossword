@@ -8,25 +8,32 @@ const keys = [
 export default function Keyboard({
   typing,
   setTyping,
-  keyClicked
+  keyClicked,
+  f
 }) {
 
   function handleClick(e) {
     if (e.target == e.currentTarget) {
+      f()
       setTyping(false)
     }
   }
 
   return (
-    <div
-      className={`fixed left-0 w-full h-[30vh] ${typing ? 'bottom-0' : '-bottom-[30vh]'} bg-gray-100 transition-all z-90`}
-      style={{ boxShadow: '0 0 5px 2px #ddd' }}
-      onClick={handleClick}
-    >
-      <div className="bg-white">
-        <div className="max-w-sm mx-auto divide-y divide-gray-200">
+    <div className={`fixed left-0 w-full h-[30vh] ${typing ? 'bottom-0' : '-bottom-[30vh]'} px-4 transition-all z-90`}>
+      <div className="max-w-sm mx-auto relative ">
+        <span 
+          className="absolute text-4xl -top-10 right-0 h-[6-vh] px-2"
+          onClick={handleClick}
+        >
+          &times;
+        </span>
+        <div 
+          className="bg-white h-[25vh] divide-y divide-gray-200"
+          style={{ boxShadow: '0 0 5px 2px #ddd' }}
+          >
           {keys.map((row, r) => (
-            <div key={r} className="grid grid-cols-7 h-[6vh]">
+            <div key={r} className="h-1/4 grid grid-cols-7">
               {row.map((col, c) => (
                 <button
                   type="button"

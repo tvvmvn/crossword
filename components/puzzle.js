@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Keyboard from "./keyboard";
 
 // captions
 const FILTER_MAP = {
@@ -14,18 +15,18 @@ export default function Puzzle({ puzzle }) {
   const { captions } = puzzle;
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
   const [downward, setDownward] = useState(false)
+  const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
-  const errors = board.flat().filter(cell => cell.q != cell.value)
+  const errors = board.flat()
+    .filter(cell => cell.q != cell.value)
 
   function handleSubmit(e) {
     e.preventDefault();
+
     setDone(true)
   }
 
-  function handleClick(e, newCrds) {
-    // cursor at last
-    e.target.setSelectionRange(1, 1)
-
+  function handleClick(newCrds) {
     const [r, c] = newCrds;
 
     // set direction to move
@@ -48,32 +49,30 @@ export default function Puzzle({ puzzle }) {
     }
     
     setCurrentCrds(newCrds)
+    setTyping(true)
   }
-  
-  // update q
-  function handleChange(value) {
-    let [r, c] = currentCrds;
 
+  function keyClicked(key) {
+    const [r, c] = currentCrds;
+
+    // update q
     const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
       if (_r == r && _c == c) {
-        return { ...col, q: value[1] || value }
+        return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
-  
+
     setBoard(updatedBoard)
-  }
-
-  // move
-  function handleKeyUp(value) {
-    const del = value == ''
-    const [r, c] = currentCrds;
+    
+    // move
     const { top, bottom, left, right } = board[r][c].around;
-
-    const west = !downward && del && left;
-    const east = !downward && !del && right;
-    const north = downward && del && top;
-    const south = downward && !del && bottom;
+    const backspace = key == 'del';
+    
+    const west = !downward && backspace && left;
+    const east = !downward && !backspace && right;
+    const north = downward && backspace && top;
+    const south = downward && !backspace && bottom;
     
     if (west) {
       setCurrentCrds([r, c - 1])
@@ -83,14 +82,6 @@ export default function Puzzle({ puzzle }) {
       setCurrentCrds([r - 1, c])
     } else if (south) {
       setCurrentCrds([r + 1, c])
-    }
-  }
-
-  function handleFocus(input, inputCrds) {
-    let [r, c] = currentCrds;
-
-    if (inputCrds[0] == r && inputCrds[1] == c) {
-      input?.focus()
     }
   }
 
@@ -150,14 +141,10 @@ export default function Puzzle({ puzzle }) {
                       <input 
                         id={col.id}
                         type="text" 
-                        className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value)} caret-transparent`}
+                        className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value)}`}
                         value={done ? col.value : col.q}
-                        onClick={(e) => handleClick(e, [r, c])}
-                        onChange={(e) => handleChange(e.target.value)}
-                        onKeyUp={(e) => handleKeyUp(e.target.value)}
-                        ref={(input) => handleFocus(input, [r, c])}
-                        autoComplete="off"
-                        disabled={done}
+                        onClick={(e) => handleClick([r, c])}
+                        readOnly
                       />
                     </>
                   )}
@@ -196,6 +183,16 @@ export default function Puzzle({ puzzle }) {
           </button>
         </p>
       )}
+
+      {/* virtual keyboard */}
+      <Keyboard
+        typing={typing}
+        setTyping={setTyping}
+        keyClicked={keyClicked}
+        f={() => {
+          setCurrentCrds([-1, -1])
+        }}
+      />
     </form>
   )
 }
