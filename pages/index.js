@@ -1,9 +1,9 @@
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
+import { getDay } from "@/lib/time"
 import sql from "@/lib/db"
 import { createPuzzle } from "@/lib/service"
-import Link from "next/link"
 
 export async function getStaticProps() {
   
@@ -11,45 +11,60 @@ export async function getStaticProps() {
   const puzzle = createPuzzle(words)
 
   console.log(puzzle)
+
+  let d = new Date(); 
+  d.setUTCHours(d.getUTCHours() + 9)
+
+  let year = d.getUTCFullYear()
+  let month = d.getUTCMonth()
+  let date = d.getUTCDate()
+  let day = d.getUTCDay()
+  let hour = d.getUTCHours()
   
   return {
     props: {
+      d: { month, date, day, year, hour },
       puzzle: JSON.parse(JSON.stringify(puzzle)),
-      d: new Date().toISOString()
     },
-    revalidate: 60 * 5 * 12 // every an hour
+    revalidate: 60 * 5 * 12 * 12 // every day
   }
 }
 
-export default function Home({ puzzle, d }) {
+export default function Home({ d, puzzle }) {
 
+  const { month, date, day, year, hour } = d;
   console.log(puzzle)
   
   return (
-    <div className="">
-      <div className="max-w-sm mx-auto px-4">
-        <header className="mt-8">
-          <h1 className="text-5xl font-semibold">
-            <code>Crossword</code>
-          </h1>
-          <p className="mt-2">
-            {d} 🎸😎
-          </p>
-        </header>
+    <div className="max-w-xl mx-auto bg-white">
+      {/* Header */}
+      <header className="pt-4 px-4">
+        <h1 className="my-4 text-4xl font-semibold">
+          {month + 1}월 {date}일 {getDay(day)}요일 ✏️
+        </h1>
+        <p className="mt-2">
+           hour: {hour} 
+        </p>
+      </header>
 
+      {/* Share button */}
+      <div className="px-4">
         <Share />
+      </div>
 
-        <div className="mt-4">
-          <Puzzle puzzle={puzzle} />
-        </div>
+      {/* Puzzle */}
+      <div className="mt-4 px-4">
+        <Puzzle puzzle={puzzle} />
       </div>
 
       <footer className="mt-20 pt-4 pb-12 bg-black">
-        <div className="max-w-sm mx-auto px-4">
+        <div className="px-4">
           {/* Subscribe form */}
           <section className="border-b border-gray-700">
             <Form />
           </section>
+
+          {/* About */}
           <section className="mt-4">
             <h3 className="my-4 text-lg font-semibold text-white">
               About
@@ -66,13 +81,6 @@ export default function Home({ puzzle, d }) {
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                 </p>
-                {/* <p className="my-4 flex gap-2">
-                  <Link href="https://github.com/tvvmvn" target="_blank">
-                    <Github size={24} color="#ddd" />
-                  </Link>
-                  <Instagram size={24} color="#ddd" />
-                  <Mail size={24} color="#ddd" />
-                </p> */}
               </div>
             </div>
           </section>

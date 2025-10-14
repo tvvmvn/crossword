@@ -8,6 +8,7 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError(null)
 
     try {
       if (!email.includes('@')) {
@@ -21,6 +22,10 @@ export default function Form() {
         },
         body: JSON.stringify({ email }),
       })
+
+      if (!res.ok) {
+        throw res;
+      }
   
       console.log(await res.json())
       setSubscribed(true)

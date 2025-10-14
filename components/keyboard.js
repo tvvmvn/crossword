@@ -20,7 +20,7 @@ export default function Keyboard({
   }
 
   return (
-    <div className={`fixed left-0 w-full h-[240px] ${typing ? 'bottom-0' : '-bottom-[240px]'} px-4 transition-all z-90`}>
+    <div className={`fixed left-0 w-full h-[220px] ${typing ? 'bottom-0' : '-bottom-[220px]'} px-4 transition-all z-90`}>
       <div className="max-w-sm mx-auto relative ">
         <span 
           className="absolute text-4xl -top-10 right-0 px-2"
