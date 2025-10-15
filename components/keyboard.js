@@ -20,18 +20,20 @@ export default function Keyboard({
   }
 
   return (
-    <div className={`fixed left-0 w-full h-[220px] ${typing ? 'bottom-0' : '-bottom-[220px]'} px-4 transition-all z-90`}>
-      <div className="max-w-sm mx-auto relative ">
-        <span 
-          className="absolute text-4xl -top-10 right-0 px-2"
-          onClick={handleClick}
+    <div className={`fixed left-0 w-full h-[240px] ${typing ? 'bottom-0' : '-bottom-[240px]'} px-4 transition-all z-90`}>
+      <div 
+        className="max-w-sm mx-auto"
+        style={{ boxShadow: '0 0 5px 2px #ddd' }}
         >
-          &times;
-        </span>
-        <div 
-          className="bg-white h-[200px] divide-y divide-gray-200"
-          style={{ boxShadow: '0 0 5px 2px #ddd' }}
+        <div className="bg-gray-100 flex justify-end">
+          <span 
+            className="text-2xl px-2"
+            onClick={handleClick}
           >
+            &times;
+          </span>
+        </div>
+        <div className="bg-white h-[180px] divide-y divide-gray-200">
           {keys.map((row, r) => (
             <div key={r} className="h-1/4 grid grid-cols-7">
               {row.map((col, c) => (

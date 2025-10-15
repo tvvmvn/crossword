@@ -125,9 +125,9 @@ export default function Puzzle({ puzzle }) {
       <table className="w-full table-fixed">
         <tbody className="border divide-y">
           {board.map((row, r) => (
-            <tr key={r} className="divide-x grid grid-cols-5">
+            <tr key={r} className="divide-x grid grid-cols-8">
               {row.map((col, c) => (
-                <td key={c} className="relative pt-[100%] bg-black">
+                <td key={c} className="relative pt-[100%] bg-gray-400">
                   {!!col.active && (
                     <>
                       {!!col.label && (

@@ -4,11 +4,13 @@ import Share from "@/components/share"
 import { getDay } from "@/lib/time"
 import sql from "@/lib/db"
 import { createPuzzle } from "@/lib/service"
+import { getFrameSet } from "@/lib/frames"
 
 export async function getStaticProps() {
   
+  const frameSet = getFrameSet(1);
   const words = await sql`SELECT * FROM words`;
-  const puzzle = createPuzzle(words)
+  const puzzle = createPuzzle(frameSet, words)
 
   console.log(puzzle)
 
@@ -20,10 +22,11 @@ export async function getStaticProps() {
   let date = d.getUTCDate()
   let day = d.getUTCDay()
   let hour = d.getUTCHours()
+  let minutes = d.getUTCMinutes();
   
   return {
     props: {
-      d: { month, date, day, year, hour },
+      d: { month, date, day, year, hour, minutes },
       puzzle: JSON.parse(JSON.stringify(puzzle)),
     },
     revalidate: 60 * 5 * 12 * 12 // every day
@@ -32,7 +35,7 @@ export async function getStaticProps() {
 
 export default function Home({ d, puzzle }) {
 
-  const { month, date, day, year, hour } = d;
+  const { month, date, day, year, hour, minutes } = d;
   console.log(puzzle)
   
   return (
@@ -43,7 +46,7 @@ export default function Home({ d, puzzle }) {
           {month + 1}월 {date}일 {getDay(day)}요일 ✏️
         </h1>
         <p className="mt-2">
-           hour: {hour} 
+           {hour}:{minutes}
         </p>
       </header>
 
