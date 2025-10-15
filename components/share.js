@@ -9,7 +9,7 @@ export default function Share() {
 
     navigator.clipboard.writeText(location.href)
       .then(() => {
-        setMessage('Copied!')
+        setMessage('Copied! 😘')
       })
       .catch(err => {
         setMessage('Try later')

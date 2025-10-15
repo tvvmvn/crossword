@@ -5,16 +5,22 @@ import { getDay } from "@/lib/time"
 import sql from "@/lib/db"
 import { createPuzzle } from "@/lib/service"
 import { getFrameSet } from "@/lib/frames"
+import { Inter, Roboto_Mono, Dongle } from 'next/font/google'
+import Layout from "@/components/layout"
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({ subsets: ['latin'] })
+const roboto_mono = Roboto_Mono({ subsets: ['latin'] })
 
 export async function getStaticProps() {
-  
+
   const frameSet = getFrameSet(1);
   const words = await sql`SELECT * FROM words`;
   const puzzle = createPuzzle(frameSet, words)
 
   console.log(puzzle)
 
-  let d = new Date(); 
+  let d = new Date();
   d.setUTCHours(d.getUTCHours() + 9)
 
   let year = d.getUTCFullYear()
@@ -23,7 +29,7 @@ export async function getStaticProps() {
   let day = d.getUTCDay()
   let hour = d.getUTCHours()
   let minutes = d.getUTCMinutes();
-  
+
   return {
     props: {
       d: { month, date, day, year, hour, minutes },
@@ -37,16 +43,16 @@ export default function Home({ d, puzzle }) {
 
   const { month, date, day, year, hour, minutes } = d;
   console.log(puzzle)
-  
+
   return (
-    <div className="max-w-xl mx-auto bg-white">
+    <Layout>
       {/* Header */}
       <header className="pt-4 px-4">
-        <h1 className="my-4 text-4xl font-semibold">
+        <h1 className={`my-4 text-4xl font-semibold ${roboto_mono.className}`}>
           {month + 1}월 {date}일 {getDay(day)}요일 ✏️
         </h1>
         <p className="mt-2">
-           {hour}:{minutes}
+          {hour}:{minutes}
         </p>
       </header>
 
@@ -89,6 +95,6 @@ export default function Home({ d, puzzle }) {
           </section>
         </div>
       </footer>
-    </div>
+    </Layout>
   )
 }

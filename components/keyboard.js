@@ -21,10 +21,7 @@ export default function Keyboard({
 
   return (
     <div className={`fixed left-0 w-full h-[240px] ${typing ? 'bottom-0' : '-bottom-[240px]'} px-4 transition-all z-90`}>
-      <div 
-        className="max-w-sm mx-auto"
-        style={{ boxShadow: '0 0 5px 2px #ddd' }}
-        >
+      <div className="max-w-sm mx-auto shadow">
         <div className="bg-gray-100 flex justify-end">
           <span 
             className="text-2xl px-2"
