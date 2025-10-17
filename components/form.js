@@ -40,7 +40,7 @@ export default function Form() {
       <div className="flex gap-2">
         <input
           type="text"
-          className="grow p-2 bg-white outline-none"
+          className="grow border p-2 outline-none"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -62,21 +62,21 @@ export default function Form() {
   )
 
   const message = (
-    <p className="my-4 text-white">
+    <p className="my-4">
       Thank you for subscribing me!
     </p>
   )
 
   return (
     <>
-      <h3 className="my-4 text-lg font-semibold text-white">
+      <h3 className="my-4 text-lg font-semibold">
         Subscribe me
       </h3>
 
       {subscribed ? message : form}
 
       <p className="my-4 text-gray-400">
-        Privacy is based on verbal contact. <br />
+        Privacy is based on verbal contact. 
         You can unsubscribe at anytime.
       </p>
     </>

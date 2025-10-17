@@ -9,7 +9,7 @@ export default function Share() {
 
     navigator.clipboard.writeText(location.href)
       .then(() => {
-        setMessage('Copied! 😘')
+        setMessage('Link is Copied! 😘')
       })
       .catch(err => {
         setMessage('Try later')
@@ -17,7 +17,7 @@ export default function Share() {
 
     setTimeout(() => {
       setMessage('')
-    }, 1000)
+    }, 1500)
   }
 
   return (
@@ -31,12 +31,12 @@ export default function Share() {
           className="px-2 py-1 font-semibold cursor-pointer"
           onClick={f}
         >
-          Share with friends
+          Share
         </button>
         {message && (
           <p 
             id="drop-content"
-            className="absolute right-0 px-2 py-1 z-20 bg-black/[0.8] text-white"
+            className="absolute right-0 w-40 px-2 py-1 z-20 bg-black/[0.8] text-white"
           >
             {message}
           </p>

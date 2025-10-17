@@ -48,7 +48,7 @@ export default function Home({ d, puzzle }) {
     <Layout>
       {/* Header */}
       <header className="pt-4 px-4">
-        <h1 className={`my-4 text-4xl font-semibold ${roboto_mono.className}`}>
+        <h1 className={`my-4 text-2xl font-semibold ${roboto_mono.className}`}>
           {month + 1}월 {date}일 {getDay(day)}요일 ✏️
         </h1>
         <p className="mt-2">
@@ -66,16 +66,18 @@ export default function Home({ d, puzzle }) {
         <Puzzle puzzle={puzzle} />
       </div>
 
-      <footer className="mt-20 pt-4 pb-12 bg-black">
+      <div className="my-8 border-t-2"></div>
+
+      <footer className="pb-12">
         <div className="px-4">
           {/* Subscribe form */}
-          <section className="border-b border-gray-700">
+          <section className="border-b border-gray-400">
             <Form />
           </section>
 
           {/* About */}
           <section className="mt-4">
-            <h3 className="my-4 text-lg font-semibold text-white">
+            <h3 className="my-4 text-lg font-semibold">
               About
             </h3>
             <div className="flex gap-4">
@@ -85,7 +87,7 @@ export default function Home({ d, puzzle }) {
                 alt="avatar"
               />
               <div>
-                <p className="text-white">
+                <p className="">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
