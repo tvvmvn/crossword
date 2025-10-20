@@ -13,24 +13,17 @@ export default function Keyboard({
 }) {
 
   function handleClick(e) {
-    if (e.target == e.currentTarget) {
-      f()
-      setTyping(false)
-    }
+    f()
+    setTyping(false)
   }
 
   return (
-    <div className={`fixed left-0 w-full h-[240px] ${typing ? 'bottom-0' : '-bottom-[240px]'} px-4 transition-all z-90`}>
-      <div className="max-w-sm mx-auto shadow">
-        <div className="bg-gray-100 flex justify-end">
-          <span 
-            className="text-2xl px-2"
-            onClick={handleClick}
-          >
-            &times;
-          </span>
-        </div>
-        <div className="bg-white h-[180px] divide-y divide-gray-200">
+    <div 
+      className={`fixed left-0 w-full h-[250px] ${typing ? 'bottom-0' : '-bottom-[240px]'} bg-white transition-all z-90`}
+      style={{ boxShadow: '0 0 4px 1px #ddd' }}
+    >
+      <div className="max-w-xl border-x border-gray-200 mx-auto">
+        <div className="bg-white h-[200px] divide-y divide-gray-200">
           {keys.map((row, r) => (
             <div key={r} className="h-1/4 grid grid-cols-7">
               {row.map((col, c) => (
@@ -45,6 +38,16 @@ export default function Keyboard({
               ))}
             </div>
           ))}
+        </div>
+        <div className="bg-gray-100 h-[50px] flex justify-end">
+          <button 
+            type="button"
+            className="w-16 flex justify-center items-center"
+            onClick={handleClick}
+          >
+            <span className="w-2 h-2 bg-red-400 rounded-full">            
+            </span>
+          </button>
         </div>
       </div>
     </div>

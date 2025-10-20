@@ -2,11 +2,12 @@ import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import { getDay } from "@/lib/time"
-import sql from "@/lib/db"
-import { createPuzzle } from "@/lib/service"
+import createPuzzle from "@/lib/service"
 import { getFrameSet } from "@/lib/frames"
 import { Inter, Roboto_Mono, Dongle } from 'next/font/google'
 import Layout from "@/components/layout"
+import HeaderAd from "@/components/header-ad"
+import Script from "next/script"
 
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({ subsets: ['latin'] })
@@ -14,11 +15,9 @@ const roboto_mono = Roboto_Mono({ subsets: ['latin'] })
 
 export async function getStaticProps() {
 
-  const frameSet = getFrameSet(1);
-  const words = await sql`SELECT * FROM words`;
-  const puzzle = createPuzzle(frameSet, words)
-
-  console.log(puzzle)
+  const puzzle = await createPuzzle()
+  console.log(puzzle.cells)
+  console.log(puzzle.captions)
 
   let d = new Date();
   d.setUTCHours(d.getUTCHours() + 9)
@@ -46,8 +45,11 @@ export default function Home({ d, puzzle }) {
 
   return (
     <Layout>
+
+      {/* <HeaderAd /> */}
+
       {/* Header */}
-      <header className="pt-4 px-4">
+      <header className="pt-4 px-2">
         <h1 className={`my-4 text-2xl font-semibold ${roboto_mono.className}`}>
           {month + 1}월 {date}일 {getDay(day)}요일 ✏️
         </h1>
@@ -57,19 +59,19 @@ export default function Home({ d, puzzle }) {
       </header>
 
       {/* Share button */}
-      <div className="px-4">
+      <div className="px-2">
         <Share />
       </div>
 
       {/* Puzzle */}
-      <div className="mt-4 px-4">
+      <div className="mt-4 px-2">
         <Puzzle puzzle={puzzle} />
       </div>
 
       <div className="my-8 border-t-2"></div>
 
       <footer className="pb-12">
-        <div className="px-4">
+        <div className="px-2">
           {/* Subscribe form */}
           <section className="border-b border-gray-400">
             <Form />

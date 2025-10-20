@@ -11,14 +11,17 @@ const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 export default function Puzzle({ puzzle }) {
   
-  const [board, setBoard] = useState(puzzle.board);
+  const [cells, setCells] = useState(puzzle.cells);
   const { captions } = puzzle;
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
+  const [group, setGroup] = useState([-1, -1]);
   const [downward, setDownward] = useState(false)
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
-  const errors = board.flat()
+  const errors = cells.flat()
     .filter(cell => cell.q != cell.value)
+
+  // console.log(group)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +33,7 @@ export default function Puzzle({ puzzle }) {
     const [r, c] = newCrds;
 
     // set direction to move
-    const { top, bottom, left, right } = board[r][c].around;
+    const { top, bottom, left, right } = cells[r][c].around;
     
     const across = left || right
     const down = top || bottom
@@ -49,6 +52,7 @@ export default function Puzzle({ puzzle }) {
     }
     
     setCurrentCrds(newCrds)
+    setGroup(cells[r][c].group)
     setTyping(true)
   }
 
@@ -56,17 +60,17 @@ export default function Puzzle({ puzzle }) {
     const [r, c] = currentCrds;
 
     // update q
-    const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
+    const updatedBoard = cells.map((row, _r) => row.map((col, _c) => {
       if (_r == r && _c == c) {
         return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
 
-    setBoard(updatedBoard)
+    setCells(updatedBoard)
     
     // move
-    const { top, bottom, left, right } = board[r][c].around;
+    const { top, bottom, left, right } = cells[r][c].around;
     const backspace = key == 'del';
     
     const west = !downward && backspace && left;
@@ -85,7 +89,7 @@ export default function Puzzle({ puzzle }) {
     }
   }
 
-  function bgColor(r, c, q, value) {
+  function bgColor(r, c, q, value, _group) {
     if (done) {
       if (q != value) {
         return 'bg-red-100'
@@ -93,12 +97,19 @@ export default function Puzzle({ puzzle }) {
       return 'bg-green-100'
     }
 
-    // active cell
+    // focused cell
     if (r == currentCrds[0] && c == currentCrds[1]) {
-      if (downward) {
-        return 'bg-yellow-100'
-      }
       return 'bg-blue-100'
+    }
+
+    // active height
+    if (downward && group[1] == _group[1]) {
+      return 'bg-gray-100'
+    }
+    
+    // active width
+    if (!downward && group[0] == _group[0]) {
+      return 'bg-gray-100'
     }
 
     return 'bg-white'
@@ -121,13 +132,13 @@ export default function Puzzle({ puzzle }) {
         </p>
       )}
 
-      {/* board */}
+      {/* cells */}
       <table className="w-full table-fixed">
-        <tbody className="border divide-y">
-          {board.map((row, r) => (
-            <tr key={r} className="divide-x grid grid-cols-8">
+        <tbody className="border border-gray-700 divide-y divide-gray-700">
+          {cells.map((row, r) => (
+            <tr key={r} className="divide-x divide-gray-700 grid grid-cols-7">
               {row.map((col, c) => (
-                <td key={c} className="relative pt-[100%] bg-gray-400">
+                <td key={c} className="relative pt-[100%] bg-black">
                   {!!col.active && (
                     <>
                       {!!col.label && (
@@ -141,9 +152,9 @@ export default function Puzzle({ puzzle }) {
                       <input 
                         id={col.id}
                         type="text" 
-                        className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value)}`}
+                        className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value, col.group)}`}
                         value={done ? col.value : col.q}
-                        onClick={(e) => handleClick([r, c])}
+                        onClick={done ? null : (e) => handleClick([r, c])}
                         readOnly
                       />
                     </>
@@ -165,7 +176,7 @@ export default function Puzzle({ puzzle }) {
           <ul>
             {captions.filter(FILTER_MAP[name]).map(caption => (
               <li key={caption.id}>
-                {caption.label}. {caption.meaning}
+                {caption.label}. {caption.content}
               </li>
             ))}
           </ul>
@@ -191,6 +202,7 @@ export default function Puzzle({ puzzle }) {
         keyClicked={keyClicked}
         f={() => {
           setCurrentCrds([-1, -1])
+          setGroup([-1, -1])
         }}
       />
     </form>
