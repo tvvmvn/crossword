@@ -6,7 +6,6 @@ import createPuzzle from "@/lib/service"
 import { getFrameSet } from "@/lib/frames"
 import { Inter, Roboto_Mono, Dongle } from 'next/font/google'
 import Layout from "@/components/layout"
-import HeaderAd from "@/components/header-ad"
 import Script from "next/script"
 
 // If loading a variable font, you don't need to specify the font weight
@@ -45,8 +44,6 @@ export default function Home({ d, puzzle }) {
 
   return (
     <Layout>
-
-      {/* <HeaderAd /> */}
 
       {/* Header */}
       <header className="pt-4 px-2">
