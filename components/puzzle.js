@@ -14,14 +14,14 @@ export default function Puzzle({ puzzle }) {
   const [cells, setCells] = useState(puzzle.cells);
   const { captions } = puzzle;
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
-  const [group, setGroup] = useState([-1, -1]);
+  const [space, setGroup] = useState([-1, -1]);
   const [downward, setDownward] = useState(false)
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
   const errors = cells.flat()
     .filter(cell => cell.q != cell.value)
 
-  // console.log(group)
+  // console.log(space)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -52,7 +52,7 @@ export default function Puzzle({ puzzle }) {
     }
     
     setCurrentCrds(newCrds)
-    setGroup(cells[r][c].group)
+    setGroup(cells[r][c].space)
     setTyping(true)
   }
 
@@ -103,12 +103,12 @@ export default function Puzzle({ puzzle }) {
     }
 
     // active height
-    if (downward && group[1] == _group[1]) {
+    if (downward && space[1] == _group[1]) {
       return 'bg-gray-100'
     }
     
     // active width
-    if (!downward && group[0] == _group[0]) {
+    if (!downward && space[0] == _group[0]) {
       return 'bg-gray-100'
     }
 
@@ -152,7 +152,7 @@ export default function Puzzle({ puzzle }) {
                       <input 
                         id={col.id}
                         type="text" 
-                        className={`absolute inset-0 text-center outline-none ${bgColor(r, c, col.q, col.value, col.group)}`}
+                        className={`absolute inset-0 text-center outline-none font-bold ${bgColor(r, c, col.q, col.value, col.space)}`}
                         value={done ? col.value : col.q}
                         onClick={done ? null : (e) => handleClick([r, c])}
                         readOnly

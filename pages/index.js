@@ -1,36 +1,21 @@
+import createPuzzle from "@/lib/service"
+import { getDateTime } from "@/lib/time"
+import { getFrameSet } from "@/lib/frames"
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
-import { getDay } from "@/lib/time"
-import createPuzzle from "@/lib/service"
-import { getFrameSet } from "@/lib/frames"
-import { Inter, Roboto_Mono, Dongle } from 'next/font/google'
 import Layout from "@/components/layout"
-import Script from "next/script"
-
-// If loading a variable font, you don't need to specify the font weight
-const inter = Inter({ subsets: ['latin'] })
-const roboto_mono = Roboto_Mono({ subsets: ['latin'] })
+import { FaBeer, FaGithub, FaInstagram } from 'react-icons/fa';
+import Link from "next/link"
 
 export async function getStaticProps() {
 
-  const puzzle = await createPuzzle()
-  console.log(puzzle.cells)
-  console.log(puzzle.captions)
-
-  let d = new Date();
-  d.setUTCHours(d.getUTCHours() + 9)
-
-  let year = d.getUTCFullYear()
-  let month = d.getUTCMonth()
-  let date = d.getUTCDate()
-  let day = d.getUTCDay()
-  let hour = d.getUTCHours()
-  let minutes = d.getUTCMinutes();
-
+  const puzzle = await createPuzzle();
+  console.log(puzzle)
+  
   return {
     props: {
-      d: { month, date, day, year, hour, minutes },
+      d: getDateTime(),
       puzzle: JSON.parse(JSON.stringify(puzzle)),
     },
     revalidate: 60 * 5 * 12 * 12 // every day
@@ -39,16 +24,15 @@ export async function getStaticProps() {
 
 export default function Home({ d, puzzle }) {
 
-  const { month, date, day, year, hour, minutes } = d;
   console.log(puzzle)
+  const { year, month, date, day, hour, minutes } = d;
 
   return (
     <Layout>
-
       {/* Header */}
       <header className="pt-4 px-2">
-        <h1 className={`my-4 text-2xl font-semibold ${roboto_mono.className}`}>
-          {month + 1}월 {date}일 {getDay(day)}요일 ✏️
+        <h1 className={`my-4 text-2xl font-semibold`}>
+          {month + 1}월 {date}일 {day}요일 퀴즈 🤓
         </h1>
         <p className="mt-2">
           {hour}:{minutes}
@@ -88,8 +72,17 @@ export default function Home({ d, puzzle }) {
               <div>
                 <p className="">
                   Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+                <p className="mt-4 flex gap-2">
+                  <Link href="" target="_blank">
+                    <FaBeer size={24} />
+                  </Link>
+                  <Link href="https://github.com/tvvmvn" target="_blank">
+                    <FaGithub size={24} />
+                  </Link>
+                  <Link href="" target="_blank">
+                    <FaInstagram size={24} />
+                  </Link>
                 </p>
               </div>
             </div>
