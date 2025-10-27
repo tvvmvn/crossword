@@ -5,10 +5,12 @@ export default function Form() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState(null);
+  const [pending, setPending] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null)
+    setPending(true)
 
     try {
       if (!email.includes('@')) {
@@ -33,14 +35,28 @@ export default function Form() {
       setError(ex);
       console.error(ex)
     }
+
+    setPending(false)
   }
 
-  const form = (
+  if (subscribed) {
+    return (
+      <p className="my-4">
+        구독해주셔서 감사합니다! 🤩
+      </p>
+    )
+  }
+
+  if (pending) {
+    return <p>처리중입니다..</p>
+  }
+
+  return (
     <form onSubmit={handleSubmit}>
       <div className="flex gap-2">
         <input
           type="text"
-          className="grow border p-2 outline-none"
+          className="grow p-2 border border-gray-200 outline-none"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -50,35 +66,14 @@ export default function Form() {
           type="submit"
           className="px-2 py-1 bg-gray-200"
         >
-          Submit
+          구독하기
         </button>
       </div>
       {error && (
         <p className="text-red-400">
-          Something's wrong
+          문제가 발생했습니다. 잠시 후 다시 시도해주세요
         </p>
       )}
     </form>
-  )
-
-  const message = (
-    <p className="my-4">
-      Thank you for subscribing me!
-    </p>
-  )
-
-  return (
-    <>
-      <h3 className="my-4 text-lg font-semibold">
-        Subscribe me
-      </h3>
-
-      {subscribed ? message : form}
-
-      <p className="my-4 text-gray-400">
-        Privacy is based on verbal contact. 
-        You can unsubscribe at anytime.
-      </p>
-    </>
   )
 }

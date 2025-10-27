@@ -34,9 +34,12 @@ export default function Home({ d, puzzle }) {
         <h1 className={`my-4 text-2xl font-semibold`}>
           {month + 1}월 {date}일 {day}요일 퀴즈 🤓
         </h1>
-        <p className="mt-2">
-          {hour}:{minutes}
+        <p className="text-red-400">
+          매일 업데이트됩니다. 🗓️
         </p>
+        <small className="mt-2">
+          {hour}:{minutes}
+        </small>
       </header>
 
       {/* Share button */}
@@ -49,19 +52,39 @@ export default function Home({ d, puzzle }) {
         <Puzzle puzzle={puzzle} />
       </div>
 
-      <div className="my-8 border-t-2"></div>
-
-      <footer className="pb-12">
+      <footer className="pt-8 pb-12 border-t-2 border-dashed">
         <div className="px-2">
+          {/* About */}
+          <section className="">
+            <h3 className="my-4 text-lg font-semibold">
+              더 읽기
+            </h3>
+            <Link href="/more">
+              <p className="my-4">
+                단어의 선정 기준, 난이도, 출제 방법 등에 대해 알아보기
+              </p>
+            </Link>
+          </section>
+
           {/* Subscribe form */}
-          <section className="border-b border-gray-400">
+          <section className="mt-8">
+            <h3 className="my-4 text-lg font-semibold">
+              구독
+            </h3>
+            <p className="my-4">
+              새로운 소식을 가장 먼저 받아보세요.
+              언제든지 구독을 취소할 수 있습니다.
+            </p>
             <Form />
+            <small className="text-gray-400">
+              이메일 제공에 동의하는 것으로 간주됩니다.
+            </small>
           </section>
 
           {/* About */}
-          <section className="mt-4">
+          <section className="mt-8">
             <h3 className="my-4 text-lg font-semibold">
-              About
+              소개
             </h3>
             <div className="flex gap-4">
               <img
@@ -71,12 +94,14 @@ export default function Home({ d, puzzle }) {
               />
               <div>
                 <p className="">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  안녕하세요 개발자 Taemin입니다.
+                  많은 분들이 매일 가볍게 즐기는 상상을 하며 만들었어요.
+                  오늘도 화이팅!
                 </p>
                 <p className="mt-4 flex gap-2">
-                  <Link href="" target="_blank">
+                  {/* <Link href="" target="_blank">
                     <FaBeer size={24} />
-                  </Link>
+                  </Link> */}
                   <Link href="https://github.com/tvvmvn" target="_blank">
                     <FaGithub size={24} />
                   </Link>

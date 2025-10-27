@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaLink, FaShareNodes } from "react-icons/fa6";
 
 export default function Share() {
 
@@ -9,7 +10,7 @@ export default function Share() {
 
     navigator.clipboard.writeText(location.href)
       .then(() => {
-        setMessage('Link is Copied! 😘')
+        setMessage('링크가 복사되었어요! 😘')
       })
       .catch(err => {
         setMessage('Try later')
@@ -28,15 +29,15 @@ export default function Share() {
       >
         <button
           id="drop-btn"
-          className="px-2 py-1 font-semibold cursor-pointer"
+          className="px-2 py-1 text-blue-400 font-semibold flex items-center gap-1 cursor-pointer"
           onClick={f}
         >
-          Share
+          <FaLink /> 공유하기
         </button>
         {message && (
           <p 
             id="drop-content"
-            className="absolute right-0 w-40 px-2 py-1 z-20 bg-black/[0.8] text-white"
+            className="absolute right-0 w-40 px-2 py-1 z-20 bg-white shadow rounded-md"
           >
             {message}
           </p>

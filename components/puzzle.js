@@ -1,10 +1,11 @@
 import { useState } from "react"
 import Keyboard from "./keyboard";
+import { FaCircleInfo, FaArrowRight } from 'react-icons/fa6';
 
 // captions
 const FILTER_MAP = {
-  ACROSS: (caption) => !caption.down,
-  DOWN: (caption) => caption.down
+  가로: (caption) => !caption.down,
+  세로: (caption) => caption.down
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
@@ -26,7 +27,11 @@ export default function Puzzle({ puzzle }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    setDone(true)
+    const r = confirm('확인할까요?');
+
+    if (r) {
+      setDone(true)
+    }
   }
 
   function handleClick(newCrds) {
@@ -94,22 +99,22 @@ export default function Puzzle({ puzzle }) {
       if (q != value) {
         return 'bg-red-100'
       }
-      return 'bg-green-100'
+      return 'bg-blue-100'
     }
 
     // focused cell
     if (r == currentCrds[0] && c == currentCrds[1]) {
-      return 'bg-blue-100'
+      return 'bg-yellow-300'
     }
 
     // active height
     if (downward && space[1] == _group[1]) {
-      return 'bg-gray-100'
+      return 'bg-yellow-100'
     }
     
     // active width
     if (!downward && space[0] == _group[0]) {
-      return 'bg-gray-100'
+      return 'bg-yellow-100'
     }
 
     return 'bg-white'
@@ -122,11 +127,11 @@ export default function Puzzle({ puzzle }) {
         <p className="my-4">
           {errors.length ? (
             <span className="text-red-400">
-              Try later 🥲
+              내일 다시 만나요 🥲
             </span>
           ) : (
             <span className="text-blue-400">
-              You did it! 🎉
+              축하합니다! 🎉
             </span>
           )}
         </p>
@@ -144,7 +149,7 @@ export default function Puzzle({ puzzle }) {
                       {!!col.label && (
                         <label 
                           htmlFor={col.id}
-                          className="absolute top-0 left-0 px-1 font-semibold z-10"
+                          className="absolute top-0 left-0 px-1 z-10"
                         >
                           {col.label}
                         </label>
@@ -166,6 +171,16 @@ export default function Puzzle({ puzzle }) {
         </tbody>
       </table>
 
+      <div className="mt-4">
+        <span className="flex gap-2 items-center text-red-400 font-bold">
+          <FaCircleInfo /> 팁
+        </span>
+        <p className="text-red-400">
+          모르는 단어가 나와도 쉽게 포기하지 마세요! 
+          사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 됩답니다!
+        </p>
+      </div>
+
       {/* captions */}
       {FILTER_NAMES.map(name => (
         <section key={name}>
@@ -185,12 +200,12 @@ export default function Puzzle({ puzzle }) {
 
       {/* submit button */}
       {!done && (
-        <p className="my-4">
+        <p className="px-2 my-4 flex justify-end">
           <button 
             type="submit"
-            className="px-2 py-1 bg-black text-white"
+            className="flex items-center gap-2 cursor-pointer"
           >
-            Submit
+            정답 확인 <FaArrowRight />
           </button>
         </p>
       )}
