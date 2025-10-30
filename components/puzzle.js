@@ -27,11 +27,7 @@ export default function Puzzle({ puzzle }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const r = confirm('확인할까요?');
-
-    if (r) {
-      setDone(true)
-    }
+    setDone(true)
   }
 
   function handleClick(newCrds) {
@@ -99,22 +95,22 @@ export default function Puzzle({ puzzle }) {
       if (q != value) {
         return 'bg-red-100'
       }
-      return 'bg-blue-100'
+      return 'bg-green-100'
     }
 
     // focused cell
     if (r == currentCrds[0] && c == currentCrds[1]) {
-      return 'bg-yellow-300'
+      return 'bg-orange-300'
     }
 
     // active height
     if (downward && space[1] == _group[1]) {
-      return 'bg-yellow-100'
+      return 'bg-orange-100'
     }
     
     // active width
     if (!downward && space[0] == _group[0]) {
-      return 'bg-yellow-100'
+      return 'bg-orange-100'
     }
 
     return 'bg-white'

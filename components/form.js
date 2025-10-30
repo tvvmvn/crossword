@@ -9,15 +9,12 @@ export default function Form() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     setError(null)
     setPending(true)
 
     try {
-      if (!email.includes('@')) {
-        throw 1;
-      }
-
-      const res = await fetch('/api/hello', {
+      const res = await fetch('/api/sub', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -31,7 +28,9 @@ export default function Form() {
   
       console.log(await res.json())
       setSubscribed(true)
+
     } catch (ex) {
+      // 400 or 500
       setError(ex);
       console.error(ex)
     }
@@ -55,12 +54,13 @@ export default function Form() {
     <form onSubmit={handleSubmit}>
       <div className="flex gap-2">
         <input
-          type="text"
+          id="email"
+          type="email"
           className="grow p-2 border border-gray-200 outline-none"
-          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="johndoe@example.com"
+          required
         />
         <button
           type="submit"
@@ -69,6 +69,9 @@ export default function Form() {
           구독하기
         </button>
       </div>
+      <small className="text-gray-400">
+        이메일 제공에 동의하는 것으로 간주됩니다.
+      </small>
       {error && (
         <p className="text-red-400">
           문제가 발생했습니다. 잠시 후 다시 시도해주세요

@@ -1,6 +1,5 @@
-import createPuzzle from "@/lib/service"
+import { createPuzzle } from "@/lib/service"
 import { getDateTime } from "@/lib/time"
-import { getFrameSet } from "@/lib/frames"
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
@@ -11,7 +10,7 @@ import Link from "next/link"
 export async function getStaticProps() {
 
   const puzzle = await createPuzzle();
-  console.log(puzzle)
+  console.log(puzzle);
   
   return {
     props: {
@@ -76,9 +75,6 @@ export default function Home({ d, puzzle }) {
               언제든지 구독을 취소할 수 있습니다.
             </p>
             <Form />
-            <small className="text-gray-400">
-              이메일 제공에 동의하는 것으로 간주됩니다.
-            </small>
           </section>
 
           {/* About */}
