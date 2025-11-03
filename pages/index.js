@@ -9,8 +9,29 @@ import Link from "next/link"
 
 export async function getStaticProps() {
 
-  const puzzle = await createPuzzle();
-  console.log(puzzle);
+  let fruits = [
+    'dragonfruit',
+    'strawberry',
+    'pineapple',
+    'avocado',
+    'orange',
+    'banana',
+    'grape',
+    'peach',
+    'apple',
+    'pear',
+  ]
+
+    // mock data
+  let data = fruits.map(fruit => {
+    return {
+      name: fruit,
+      meaning: 'a caption for ' + fruit
+    }
+  })
+
+  const puzzle = createPuzzle(data);
+  // console.log(puzzle);
   
   return {
     props: {
@@ -47,11 +68,11 @@ export default function Home({ d, puzzle }) {
       </div>
 
       {/* Puzzle */}
-      <div className="mt-4 px-2">
+      <div className="mt-2">
         <Puzzle puzzle={puzzle} />
       </div>
 
-      <footer className="pt-8 pb-12 border-t-2 border-dashed">
+      <footer className="mt-8 pt-8 pb-12 border-t-2 border-dashed">
         <div className="px-2">
           {/* About */}
           <section className="">

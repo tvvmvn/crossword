@@ -14,13 +14,13 @@ export default async function handler(req, res) {
     let id = await sql`SELECT * FROM subscribers WHERE email=${email}`;
 
     if (id.length) {
-      throw 'duplicate email';
+      return res.status(200).json({ message: 'done' })
     }
 
-    // save
+    // save in db
     await sql`INSERT INTO subscribers (email) VALUES (${email})`;
   
-    res.status(200).json({ message: 'done' });
+    res.status(201).json({ message: 'done' });
   
   } catch (ex) {
     res.status(400).json({ message: 'something is wrong' });

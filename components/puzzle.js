@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Keyboard from "./keyboard";
-import { FaCircleInfo, FaArrowRight } from 'react-icons/fa6';
+import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 
 // captions
 const FILTER_MAP = {
@@ -12,14 +12,14 @@ const FILTER_NAMES = Object.keys(FILTER_MAP)
 
 export default function Puzzle({ puzzle }) {
   
-  const [cells, setCells] = useState(puzzle.cells);
+  const [board, setBoard] = useState(puzzle.board);
   const { captions } = puzzle;
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
   const [space, setGroup] = useState([-1, -1]);
   const [downward, setDownward] = useState(false)
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
-  const errors = cells.flat()
+  const errors = board.flat()
     .filter(cell => cell.q != cell.value)
 
   // console.log(space)
@@ -34,7 +34,7 @@ export default function Puzzle({ puzzle }) {
     const [r, c] = newCrds;
 
     // set direction to move
-    const { top, bottom, left, right } = cells[r][c].around;
+    const { top, bottom, left, right } = board[r][c].around;
     
     const across = left || right
     const down = top || bottom
@@ -53,7 +53,7 @@ export default function Puzzle({ puzzle }) {
     }
     
     setCurrentCrds(newCrds)
-    setGroup(cells[r][c].space)
+    setGroup(board[r][c].space)
     setTyping(true)
   }
 
@@ -61,17 +61,17 @@ export default function Puzzle({ puzzle }) {
     const [r, c] = currentCrds;
 
     // update q
-    const updatedBoard = cells.map((row, _r) => row.map((col, _c) => {
+    const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
       if (_r == r && _c == c) {
         return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
 
-    setCells(updatedBoard)
+    setBoard(updatedBoard)
     
     // move
-    const { top, bottom, left, right } = cells[r][c].around;
+    const { top, bottom, left, right } = board[r][c].around;
     const backspace = key == 'del';
     
     const west = !downward && backspace && left;
@@ -100,17 +100,17 @@ export default function Puzzle({ puzzle }) {
 
     // focused cell
     if (r == currentCrds[0] && c == currentCrds[1]) {
-      return 'bg-orange-300'
+      return 'bg-yellow-300'
     }
 
     // active height
     if (downward && space[1] == _group[1]) {
-      return 'bg-orange-100'
+      return 'bg-yellow-100'
     }
     
     // active width
     if (!downward && space[0] == _group[0]) {
-      return 'bg-orange-100'
+      return 'bg-yellow-100'
     }
 
     return 'bg-white'
@@ -120,7 +120,7 @@ export default function Puzzle({ puzzle }) {
     <form onSubmit={handleSubmit}>
       {/* result messages */}
       {done && (
-        <p className="my-4">
+        <p className="my-4 px-2">
           {errors.length ? (
             <span className="text-red-400">
               내일 다시 만나요 🥲
@@ -133,26 +133,37 @@ export default function Puzzle({ puzzle }) {
         </p>
       )}
 
-      {/* cells */}
-      <table className="w-full table-fixed">
-        <tbody className="border border-gray-700 divide-y divide-gray-700">
-          {cells.map((row, r) => (
-            <tr key={r} className="divide-x divide-gray-700 grid grid-cols-7">
+      {/* board */}
+      <div className="overflow-auto max-h-[400px] bg-gray-200 p-2">
+        <div 
+          className="divide-y divide-gray-400 border border-gray-400"
+            style={{ width: `${board[0].length * 30}px` }}
+          >
+          {board.map((row, r) => (
+            <div 
+              key={r}
+              id="tr"
+              className="divide-x divide-gray-400 flex w-full"
+            >
               {row.map((col, c) => (
-                <td key={c} className="relative pt-[100%] bg-black">
+                <div 
+                  key={c} 
+                  id="td"
+                  className="relative w-[30px] h-[30px] bg-gray-200"
+                >
                   {!!col.active && (
                     <>
                       {!!col.label && (
-                        <label 
+                        <label
                           htmlFor={col.id}
-                          className="absolute top-0 left-0 px-1 z-10"
+                          className="absolute top-0 left-px z-10 text-xs"
                         >
                           {col.label}
                         </label>
                       )}
-                      <input 
+                      <input
                         id={col.id}
-                        type="text" 
+                        type="text"
                         className={`absolute inset-0 text-center outline-none font-bold ${bgColor(r, c, col.q, col.value, col.space)}`}
                         value={done ? col.value : col.q}
                         onClick={done ? null : (e) => handleClick([r, c])}
@@ -160,14 +171,34 @@ export default function Puzzle({ puzzle }) {
                       />
                     </>
                   )}
-                </td>
+                </div>
               ))}
-            </tr>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
 
-      <div className="mt-4">
+      {/* captions */}
+      <div className="px-2">
+        {FILTER_NAMES.map(name => (
+          <section key={name}>
+            <h3 className="my-4 font-semibold flex gap-2 items-center">
+              {name} <FaKey size={12} className="text-gray-400" />
+            </h3>
+
+            <ul>
+              {captions.filter(FILTER_MAP[name]).map(caption => (
+                <li key={caption.id}>
+                  {caption.label}. {caption.content}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      {/* TIP */}
+      <div className="mt-4 px-2">
         <span className="flex gap-2 items-center text-red-400 font-bold">
           <FaCircleInfo /> 팁
         </span>
@@ -176,23 +207,6 @@ export default function Puzzle({ puzzle }) {
           사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 됩답니다!
         </p>
       </div>
-
-      {/* captions */}
-      {FILTER_NAMES.map(name => (
-        <section key={name}>
-          <h3 className="my-4 font-semibold">
-            {name}
-          </h3>
-
-          <ul>
-            {captions.filter(FILTER_MAP[name]).map(caption => (
-              <li key={caption.id}>
-                {caption.label}. {caption.content}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
 
       {/* submit button */}
       {!done && (
