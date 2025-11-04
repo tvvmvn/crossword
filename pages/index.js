@@ -1,4 +1,4 @@
-import { createPuzzle } from "@/lib/service"
+import createPuzzle from "@/lib/service/main"
 import { getDateTime } from "@/lib/time"
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"

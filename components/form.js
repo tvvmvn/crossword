@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { isValidEmail } from "@/lib/validate";
 
 export default function Form() {
 
   const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [subscribing, setSubscribing] = useState(false);
+  const [done, setDone] = useState(false);
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false)
 
@@ -13,8 +13,12 @@ export default function Form() {
 
     setError(null)
     setPending(true)
-
+    
     try {
+      if (!isValidEmail(email)) {
+        throw new Error('올바른 이메일을 입력하세요');
+      }
+
       const res = await fetch('/api/sub', {
         method: 'POST',
         headers: {
@@ -22,15 +26,16 @@ export default function Form() {
         },
         body: JSON.stringify({ email }),
       })
-      console.log(await res.json());
-
-      if (res.created) {
-        setSubscribed(true)
-      } else if (res.ok) {
-        setSubscribing(true)
-      } else {
-        throw res;
+      
+      if (!res.ok) {
+        if (res.status == 409) {
+          throw new Error('이미 구독중이시군요!')
+        }
+        throw new Error('문제가 발생했습니다. 나중에 다시 시도해주세요')
       }
+
+      console.log(await res.json());
+      setDone(true)
   
     } catch (ex) {
       console.error(ex)
@@ -40,15 +45,7 @@ export default function Form() {
     setPending(false)
   }
 
-  if (subscribing) {
-    return (
-      <p className="my-4">
-        이미 구독중이시군요!
-      </p>
-    )
-  }
-
-  if (subscribed) {
+  if (done) {
     return (
       <p className="my-4">
         구독해주셔서 감사합니다! 🤩
@@ -65,12 +62,11 @@ export default function Form() {
       <div className="flex gap-2">
         <input
           id="email"
-          type="email"
+          type="text"
           className="grow p-2 border border-gray-200 outline-none"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="johndoe@example.com"
-          required
         />
         <button
           type="submit"
@@ -85,8 +81,8 @@ export default function Form() {
 
       {/* error message */}
       {error && (
-        <p className="text-red-400">
-          문제가 발생했습니다. 잠시 후 다시 시도해주세요
+        <p className="my-2 text-red-400">
+          {error.message}
         </p>
       )}
     </form>

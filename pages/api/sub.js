@@ -1,5 +1,5 @@
 import sql from "@/lib/db";
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 
 export default async function handler(req, res) {
   
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     let id = await sql`SELECT * FROM subscribers WHERE email=${email}`;
 
     if (id.length) {
-      return res.status(200).json({ message: 'done' })
+      throw 'duplicate email';
     }
 
     // save in db
@@ -23,7 +23,12 @@ export default async function handler(req, res) {
     res.status(201).json({ message: 'done' });
   
   } catch (ex) {
-    res.status(400).json({ message: 'something is wrong' });
     console.error(ex)
+    
+    if (ex instanceof z.ZodError) {
+      res.status(400).end();
+    } else {
+      res.status(409).end();
+    }
   }
 }
