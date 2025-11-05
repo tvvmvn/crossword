@@ -6,30 +6,11 @@ import Share from "@/components/share"
 import Layout from "@/components/layout"
 import { FaBeer, FaGithub, FaInstagram } from 'react-icons/fa';
 import Link from "next/link"
+import { getWords } from "@/lib/data"
 
 export async function getStaticProps() {
 
-  let fruits = [
-    'dragonfruit',
-    'strawberry',
-    'pineapple',
-    'avocado',
-    'orange',
-    'banana',
-    'grape',
-    'peach',
-    'apple',
-    'pear',
-  ]
-
-    // mock data
-  let data = fruits.map(fruit => {
-    return {
-      name: fruit,
-      meaning: 'a caption for ' + fruit
-    }
-  })
-
+  const data = await getWords();
   const puzzle = createPuzzle(data);
   // console.log(puzzle);
   
@@ -37,14 +18,13 @@ export async function getStaticProps() {
     props: {
       d: getDateTime(),
       puzzle: JSON.parse(JSON.stringify(puzzle)),
-    },
-    revalidate: 60 * 5 * 12 * 12 // every day
+    }
   }
 }
 
 export default function Home({ d, puzzle }) {
 
-  console.log(puzzle)
+  // console.log(puzzle)
   const { year, month, date, day, hour, minutes } = d;
 
   return (
