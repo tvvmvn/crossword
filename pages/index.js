@@ -10,15 +10,13 @@ import { getWords } from "@/lib/data"
 
 export async function getStaticProps() {
 
-  let d = getDateTime();
-
-  const data = await getWords(d.minutes || 1);
+  const data = await getWords();
   const puzzle = createPuzzle(data);
   // console.log(puzzle);
   
   return {
     props: {
-      d,
+      d: getDateTime(),
       puzzle: JSON.parse(JSON.stringify(puzzle)),
     }
   }
