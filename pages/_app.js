@@ -6,7 +6,7 @@ const roboto_mono = Roboto_Mono({ subsets: ['latin'] })
 export default function App({ Component, pageProps }) {
   return (
     <div className={roboto_mono.className}>
-      <Component {...pageProps} />
+      <Component {...pageProps} foo="bar" />
     </div>
   )
 }

@@ -6,110 +6,123 @@ import Share from "@/components/share"
 import Layout from "@/components/layout"
 import { FaBeer, FaGithub, FaInstagram } from 'react-icons/fa';
 import Link from "next/link"
-import { getWords } from "@/lib/data"
+import Avatar from "@/components/avatar"
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
+  console.log(context)
 
-  const data = await getWords();
-  const puzzle = createPuzzle(data);
-  // console.log(puzzle);
-  
-  return {
-    props: {
-      d: getDateTime(),
-      puzzle: JSON.parse(JSON.stringify(puzzle)),
+  try {
+    const puzzle = await createPuzzle();
+    // console.log(puzzle);
+    
+    // console.log(null[0])
+
+    return {
+      props: {
+        d: getDateTime(),
+        puzzle
+      }
     }
+  } catch (ex) {
+    console.error(ex)
+    return { notFound: true } 
   }
 }
 
-export default function Home({ d, puzzle }) {
+export default function Home({ d, puzzle, foo }) {
 
-  // console.log(puzzle)
+  const { board, captions } = puzzle;
   const { year, month, date, day, hour, minutes } = d;
 
   return (
     <Layout>
       {/* Header */}
       <header className="pt-4 px-2">
-        <h1 className={`my-4 text-2xl font-semibold`}>
-          {month + 1}월 {date}일 {day}요일 퀴즈 🤓
-        </h1>
-        <p className="text-red-400">
-          매일 업데이트됩니다. 🗓️
+        <p className="my-2 font-semibold">
+          CrossDays [{hour}:{minutes}]
         </p>
-        <small className="mt-2">
-          {hour}:{minutes}
-        </small>
+        <h1 className="my-4 text-2xl font-semibold">
+          {month}월 {date}일 {day}요일 퀴즈 🤓
+        </h1>
+        <blockquote className="p-2 bg-red-300">
+          <p className="text-white">
+            🗓️ 매일 업데이트됩니다. 
+          </p>
+        </blockquote>
       </header>
 
       {/* Share button */}
-      <div className="px-2">
+      <div className="mt-8 px-2">
         <Share />
       </div>
 
       {/* Puzzle */}
       <div className="mt-2">
-        <Puzzle puzzle={puzzle} />
+        <Puzzle 
+          initialBoard={board}
+          captions={captions}
+        />
       </div>
 
-      <footer className="mt-8 pt-8 pb-12 border-t-2 border-dashed">
-        <div className="px-2">
-          {/* About */}
-          <section className="">
-            <h3 className="my-4 text-lg font-semibold">
-              더 읽기
-            </h3>
-            <Link href="/more">
-              <p className="my-4">
-                단어의 선정 기준, 난이도, 출제 방법 등에 대해 알아보기
-              </p>
-            </Link>
-          </section>
-
-          {/* Subscribe form */}
-          <section className="mt-8">
-            <h3 className="my-4 text-lg font-semibold">
-              구독
-            </h3>
-            <p className="my-4">
-              새로운 소식을 가장 먼저 받아보세요.
-              언제든지 구독을 취소할 수 있습니다.
+      <footer className="mt-8 pt-8 px-2 pb-12">
+        <h2 className="my-8 text-2xl font-semibold">
+          더 읽기
+        </h2>
+        {/* About */}
+        <section className="">
+          <h3 className="my-4 text-lg font-semibold">
+            퍼즐에 대해서
+          </h3>
+          <Link href="/more">
+            <p className="my-4 italic">
+              단어의 선정 기준, 난이도, 출제 방법 등에 대해 알아보기
             </p>
-            <Form />
-          </section>
+          </Link>
+        </section>
 
-          {/* About */}
-          <section className="mt-8">
-            <h3 className="my-4 text-lg font-semibold">
-              소개
-            </h3>
-            <div className="flex gap-4">
-              <img
-                src="/avatar.webp"
-                className="w-20 h-20 object-cover rounded-full"
-                alt="avatar"
+        {/* Subscribe form */}
+        <section className="mt-8">
+          <h3 className="my-4 text-lg font-semibold">
+            구독
+          </h3>
+          <p className="my-4">
+            개발자의 새로운 소식을 가장 먼저 받아보세요!
+          </p>
+          <Form />
+        </section>
+
+        {/* About */}
+        <section className="mt-8">
+          <h3 className="my-4 text-lg font-semibold">
+            안녕하세요!
+          </h3>
+          <div className="flex">
+            <div className="w-20 h-20 shrink-0">
+              <Avatar 
+                d={d} 
+                board={board} 
               />
-              <div>
-                <p className="">
-                  안녕하세요 개발자 Taemin입니다.
-                  많은 분들이 매일 가볍게 즐기는 상상을 하며 만들었어요.
-                  오늘도 화이팅!
-                </p>
-                <p className="mt-4 flex gap-2">
-                  {/* <Link href="" target="_blank">
+            </div>
+            <div className="ml-4">
+              <p className="">
+                개발자 Taemin입니다.
+                많은 분들이 매일 가볍게 즐기는 상상을 하며 만들었어요.
+                오늘도 화이팅!
+              </p>
+              <p className="mt-4 flex gap-2">
+                {/* <Link href="" target="_blank">
                     <FaBeer size={24} />
                   </Link> */}
-                  <Link href="https://github.com/tvvmvn" target="_blank">
-                    <FaGithub size={24} />
-                  </Link>
-                  <Link href="" target="_blank">
-                    <FaInstagram size={24} />
-                  </Link>
-                </p>
-              </div>
+                <Link href="https://github.com/tvvmvn" target="_blank">
+                  <FaGithub size={24} />
+                </Link>
+                <Link href="" target="_blank">
+                  <FaInstagram size={24} />
+                </Link>
+              </p>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </footer>
     </Layout>
   )

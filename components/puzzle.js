@@ -10,12 +10,11 @@ const FILTER_MAP = {
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
-export default function Puzzle({ puzzle }) {
+export default function Puzzle({ initialBoard, captions }) {
   
-  const [board, setBoard] = useState(puzzle.board);
-  const { captions } = puzzle;
+  const [board, setBoard] = useState(initialBoard);
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
-  const [space, setGroup] = useState([-1, -1]);
+  const [space, setSpace] = useState([-1, -1]);
   const [downward, setDownward] = useState(false)
   const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
@@ -53,7 +52,7 @@ export default function Puzzle({ puzzle }) {
     }
     
     setCurrentCrds(newCrds)
-    setGroup(board[r][c].space)
+    setSpace(board[r][c].space)
     setTyping(true)
   }
 
@@ -183,7 +182,7 @@ export default function Puzzle({ puzzle }) {
         {FILTER_NAMES.map(name => (
           <section key={name}>
             <h3 className="my-4 font-semibold flex gap-2 items-center">
-              {name} <FaKey size={12} className="text-gray-400" />
+              {name} 힌트
             </h3>
 
             <ul>
@@ -198,7 +197,7 @@ export default function Puzzle({ puzzle }) {
       </div>
 
       {/* TIP */}
-      <div className="mt-4 px-2">
+      <div className="mt-8 px-2">
         <span className="flex gap-2 items-center text-red-400 font-bold">
           <FaCircleInfo /> 팁
         </span>
@@ -223,11 +222,11 @@ export default function Puzzle({ puzzle }) {
       {/* virtual keyboard */}
       <Keyboard
         typing={typing}
-        setTyping={setTyping}
         keyClicked={keyClicked}
-        f={() => {
+        hide={() => {
           setCurrentCrds([-1, -1])
-          setGroup([-1, -1])
+          setSpace([-1, -1])
+          setTyping(false)
         }}
       />
     </form>
