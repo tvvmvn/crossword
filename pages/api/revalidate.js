@@ -4,6 +4,14 @@ export default async function handler(req, res) {
   // if (req.query.secret !== process.env.MY_SECRET_TOKEN) {
   //   return res.status(401).json({ message: 'Invalid token' })
   // }
+
+  if (process.env.NODE_ENV == 'production') {
+    const authHeader = req.headers['authorization']
+    
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return res.status(401).send('Unauthorized')
+    }
+  }
  
   try {
     // This should be the actual path not a rewritten path

@@ -94,7 +94,7 @@ export default function Puzzle({ initialBoard, captions }) {
       if (q != value) {
         return 'bg-red-100'
       }
-      return 'bg-green-100'
+      return 'bg-blue-100'
     }
 
     // focused cell
@@ -112,7 +112,7 @@ export default function Puzzle({ initialBoard, captions }) {
       return 'bg-yellow-100'
     }
 
-    return 'bg-white'
+    return 'bg-slate-200'
   }
 
   return (
@@ -133,22 +133,22 @@ export default function Puzzle({ initialBoard, captions }) {
       )}
 
       {/* board */}
-      <div className="overflow-auto max-h-[400px] bg-gray-200 p-2">
+      <div className="overflow-auto max-h-[400px] p-2">
         <div 
-          className="divide-y divide-gray-400 border border-gray-400"
+          className="divide-y-2 divide-gray-400 border-2 border-gray-400"
             style={{ width: `${board[0].length * 30}px` }}
           >
           {board.map((row, r) => (
             <div 
               key={r}
               id="tr"
-              className="divide-x divide-gray-400 flex w-full"
+              className="divide-x-2 divide-gray-400 flex w-full"
             >
               {row.map((col, c) => (
                 <div 
                   key={c} 
                   id="td"
-                  className="relative w-[30px] h-[30px] bg-gray-200"
+                  className="relative w-[30px] h-[30px]"
                 >
                   {!!col.active && (
                     <>

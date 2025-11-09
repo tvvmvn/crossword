@@ -26,8 +26,10 @@ export default function Avatar({ d, board }) {
       className="fixed inset-0 bg-white px-2 z-90"
       onClick={handleClose}
     >
-      <h1 className="my-8 text-xl font-semibold text-center">
-        {month}월 {date}일 영어단어 십자말 퀴즈
+      <h1 className="my-8 text-2xl font-semibold text-center">
+        {month}월 {date}일 일요일 
+        <br />
+        영어단어 퀴즈 🇰🇷🇺🇸
       </h1>
       <table className="w-full">
         <tbody className="divide-y divide-gray-700 border bg-black">

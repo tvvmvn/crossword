@@ -4,7 +4,7 @@ import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import Layout from "@/components/layout"
-import { FaBeer, FaGithub, FaInstagram } from 'react-icons/fa';
+import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
 import Link from "next/link"
 import Avatar from "@/components/avatar"
 
@@ -109,17 +109,17 @@ export default function Home({ d, puzzle, foo }) {
                 많은 분들이 매일 가볍게 즐기는 상상을 하며 만들었어요.
                 오늘도 화이팅!
               </p>
-              <p className="mt-4 flex gap-2">
-                {/* <Link href="" target="_blank">
-                    <FaBeer size={24} />
-                  </Link> */}
+              <div className="mt-4 flex items-center gap-2">
+                <Link href="mailto:tvvmvn@gmail.com" target="_blank">
+                  <FaRegEnvelope size={26} />
+                </Link>
                 <Link href="https://github.com/tvvmvn" target="_blank">
                   <FaGithub size={24} />
                 </Link>
                 <Link href="" target="_blank">
                   <FaInstagram size={24} />
                 </Link>
-              </p>
+              </div>
             </div>
           </div>
         </section>

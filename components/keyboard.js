@@ -20,7 +20,7 @@ export default function Keyboard({
         >
           </span>
         {/* Keyboard */}
-        <div className="h-[200px] p-2">
+        <div className="h-[200px]">
           {keys.map((row, r) => (
             <div key={r} className="h-1/4 grid grid-cols-7">
               {row.map((col, c) => (
