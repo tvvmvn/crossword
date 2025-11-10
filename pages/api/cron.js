@@ -1,10 +1,5 @@
 export default async function handler(req, res) {
 
-  // Check for secret to confirm this is a valid request
-  // if (req.query.secret !== process.env.MY_SECRET_TOKEN) {
-  //   return res.status(401).json({ message: 'Invalid token' })
-  // }
-
   if (process.env.NODE_ENV == 'production') {
     const authHeader = req.headers['authorization']
     
@@ -18,7 +13,7 @@ export default async function handler(req, res) {
     // e.g. for "/posts/[id]" this should be "/posts/1"
     await res.revalidate('/')
 
-    return res.json({ revalidated: true })
+    return res.send('Done')
 
   } catch (err) {
     // If there was an error, Next.js will continue

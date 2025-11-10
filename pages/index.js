@@ -1,22 +1,18 @@
+import Link from "next/link"
 import createPuzzle from "@/lib/service/main"
 import { getDateTime } from "@/lib/time"
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import Layout from "@/components/layout"
-import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
-import Link from "next/link"
 import Avatar from "@/components/avatar"
+import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
 
-export async function getStaticProps(context) {
-  console.log(context)
-
+export async function getStaticProps() {
   try {
     const puzzle = await createPuzzle();
     // console.log(puzzle);
     
-    // console.log(null[0])
-
     return {
       props: {
         d: getDateTime(),
@@ -29,7 +25,7 @@ export async function getStaticProps(context) {
   }
 }
 
-export default function Home({ d, puzzle, foo }) {
+export default function Home({ d, puzzle }) {
 
   const { board, captions } = puzzle;
   const { year, month, date, day, hour, minutes } = d;
@@ -44,8 +40,8 @@ export default function Home({ d, puzzle, foo }) {
         <h1 className="my-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 퀴즈 🤓
         </h1>
-        <blockquote className="p-2 bg-red-300">
-          <p className="text-white">
+        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100">
+          <p className="">
             🗓️ 매일 업데이트됩니다. 
           </p>
         </blockquote>

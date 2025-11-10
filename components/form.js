@@ -63,14 +63,14 @@ export default function Form() {
         <input
           id="email"
           type="text"
-          className="grow p-2 border border-gray-200 outline-none"
+          className="grow px-4 py-2 border border-gray-200 outline-none"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="johndoe@example.com"
+          placeholder="이메일을 입력하세요.."
         />
         <button
           type="submit"
-          className="px-2 py-1 bg-gray-200 cursor-pointer"
+          className="px-2 py-1 bg-slate-200 font-semibold cursor-pointer"
         >
           구독하기
         </button>

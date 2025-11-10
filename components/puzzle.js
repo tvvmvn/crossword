@@ -133,11 +133,11 @@ export default function Puzzle({ initialBoard, captions }) {
       )}
 
       {/* board */}
-      <div className="overflow-auto max-h-[400px] p-2">
+      <div className="overflow-auto max-h-[400px]">
         <div 
-          className="divide-y-2 divide-gray-400 border-2 border-gray-400"
-            style={{ width: `${board[0].length * 30}px` }}
-          >
+          className="divide-y-2 divide-gray-400"
+          style={{ width: `${board[0].length * 30}px` }}
+        >
           {board.map((row, r) => (
             <div 
               key={r}
