@@ -7,6 +7,7 @@ import Share from "@/components/share"
 import Layout from "@/components/layout"
 import Avatar from "@/components/avatar"
 import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
+import { AiOutlineMail } from "react-icons/ai";
 
 export async function getStaticProps() {
   try {
@@ -40,8 +41,8 @@ export default function Home({ d, puzzle }) {
         <h1 className="my-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 퀴즈 🤓
         </h1>
-        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100">
-          <p className="">
+        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100 font-semibold">
+          <p className="text-red-300">
             🗓️ 매일 업데이트됩니다. 
           </p>
         </blockquote>
@@ -107,7 +108,7 @@ export default function Home({ d, puzzle }) {
               </p>
               <div className="mt-4 flex items-center gap-2">
                 <Link href="mailto:tvvmvn@gmail.com" target="_blank">
-                  <FaRegEnvelope size={26} />
+                  <AiOutlineMail size={26} />
                 </Link>
                 <Link href="https://github.com/tvvmvn" target="_blank">
                   <FaGithub size={24} />

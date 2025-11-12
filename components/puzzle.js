@@ -133,9 +133,9 @@ export default function Puzzle({ initialBoard, captions }) {
       )}
 
       {/* board */}
-      <div className="overflow-auto max-h-[400px]">
+      <div className="overflow-auto max-h-[400px] p-2">
         <div 
-          className="divide-y-2 divide-gray-400"
+          className="border-2 border-gray-400 divide-y-2 divide-gray-400"
           style={{ width: `${board[0].length * 30}px` }}
         >
           {board.map((row, r) => (
@@ -175,6 +175,11 @@ export default function Puzzle({ initialBoard, captions }) {
             </div>
           ))}
         </div>
+      </div>
+      <div className="flex justify-end px-2">
+        <small className="text-gray-400">
+          퍼즐을 위아래/좌우로 스크롤 할 수 있어요
+        </small>
       </div>
 
       {/* captions */}

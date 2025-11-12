@@ -1,11 +1,9 @@
 export default async function handler(req, res) {
 
-  if (process.env.NODE_ENV == 'production') {
-    const authHeader = req.headers['authorization']
-    
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      return res.status(401).send('Unauthorized')
-    }
+  const authHeader = req.headers['authorization']
+  
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).send('Unauthorized')
   }
  
   try {
