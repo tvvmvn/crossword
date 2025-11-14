@@ -2,14 +2,6 @@ import { useState } from "react"
 import Keyboard from "./keyboard";
 import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 
-// captions
-const FILTER_MAP = {
-  가로: (caption) => !caption.down,
-  세로: (caption) => caption.down
-}
-
-const FILTER_NAMES = Object.keys(FILTER_MAP)
-
 export default function Puzzle({ initialBoard, captions }) {
   
   const [board, setBoard] = useState(initialBoard);
@@ -112,7 +104,7 @@ export default function Puzzle({ initialBoard, captions }) {
       return 'bg-yellow-100'
     }
 
-    return 'bg-slate-200'
+    return 'bg-white'
   }
 
   return (
@@ -133,22 +125,19 @@ export default function Puzzle({ initialBoard, captions }) {
       )}
 
       {/* board */}
-      <div className="overflow-auto max-h-[400px] p-2">
-        <div 
-          className="border-2 border-gray-400 divide-y-2 divide-gray-400"
-          style={{ width: `${board[0].length * 30}px` }}
-        >
+      <table className="w-full">
+        <tbody className="border border-gray-400 divide-y divide-gray-400 bg-gray-100">
           {board.map((row, r) => (
-            <div 
+            <tr 
               key={r}
               id="tr"
-              className="divide-x-2 divide-gray-400 flex w-full"
+              className="h-1/12 grid grid-cols-12 divide-x divide-gray-400"
             >
               {row.map((col, c) => (
-                <div 
+                <td 
                   key={c} 
                   id="td"
-                  className="relative w-[30px] h-[30px]"
+                  className="relative pt-[100%]"
                 >
                   {!!col.active && (
                     <>
@@ -170,46 +159,48 @@ export default function Puzzle({ initialBoard, captions }) {
                       />
                     </>
                   )}
-                </div>
+                </td>
               ))}
-            </div>
+            </tr>
           ))}
+        </tbody>
+      </table>
+
+      {/* Caption */}
+      <div className="my-4 px-2">
+        <div className="bg-gray-100 p-2">
+          <p className="">
+            {captions.map(caption => {
+              if (downward) {
+                if (caption.label == space[1] && caption.down) {
+                  return caption.content
+                }
+              } else { 
+                if (caption.label == space[0] && !caption.down) {
+                  return caption.content
+                }
+              }
+            })}
+          </p>
         </div>
       </div>
-      <div className="flex justify-end px-2">
-        <small className="text-gray-400">
-          퍼즐을 위아래/좌우로 스크롤 할 수 있어요
-        </small>
-      </div>
 
-      {/* captions */}
-      <div className="px-2">
-        {FILTER_NAMES.map(name => (
-          <section key={name}>
-            <h3 className="my-4 font-semibold flex gap-2 items-center">
-              {name} 힌트
-            </h3>
-
-            <ul>
-              {captions.filter(FILTER_MAP[name]).map(caption => (
-                <li key={caption.id}>
-                  {caption.label}. {caption.content}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
+      {/* virtual keyboard */}
+      <Keyboard
+        keyClicked={keyClicked}
+      />
 
       {/* TIP */}
       <div className="mt-8 px-2">
-        <span className="flex gap-2 items-center text-red-400 font-bold">
-          <FaCircleInfo /> 팁
-        </span>
-        <p className="text-red-400">
-          모르는 단어가 나와도 쉽게 포기하지 마세요! 
-          사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 됩답니다!
-        </p>
+        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100 font-semibold">
+          <span className="flex gap-2 items-center text-red-400 font-bold">
+            <FaCircleInfo /> 팁
+          </span>
+          <p className="text-red-400">
+            모르는 단어가 나와도 쉽게 포기하지 마세요!
+            사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 됩답니다!
+          </p>
+        </blockquote>
       </div>
 
       {/* submit button */}
@@ -223,17 +214,6 @@ export default function Puzzle({ initialBoard, captions }) {
           </button>
         </p>
       )}
-
-      {/* virtual keyboard */}
-      <Keyboard
-        typing={typing}
-        keyClicked={keyClicked}
-        hide={() => {
-          setCurrentCrds([-1, -1])
-          setSpace([-1, -1])
-          setTyping(false)
-        }}
-      />
     </form>
   )
 }

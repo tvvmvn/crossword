@@ -41,11 +41,9 @@ export default function Home({ d, puzzle }) {
         <h1 className="my-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 퀴즈 🤓
         </h1>
-        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100 font-semibold">
-          <p className="text-red-300">
-            🗓️ 매일 업데이트됩니다. 
-          </p>
-        </blockquote>
+        <p className="text-red-400 italic">
+          "🗓️ 매일 업데이트됩니다"
+        </p>
       </header>
 
       {/* Share button */}
@@ -98,6 +96,7 @@ export default function Home({ d, puzzle }) {
               <Avatar 
                 d={d} 
                 board={board} 
+                captions={captions}
               />
             </div>
             <div className="ml-4">
