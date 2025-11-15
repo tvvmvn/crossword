@@ -13,7 +13,6 @@ export default function Layout({ children }) {
           name="description" 
           content="crossword puzzle" 
         />
-        <meta name="google-adsense-account" content="ca-pub-1123671203924892"></meta>
       </Head>
       <main className="max-w-xl mx-auto bg-white">
         {children}
