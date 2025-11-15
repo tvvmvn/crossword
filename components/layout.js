@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Analytics } from '@vercel/analytics/next';
-import Script from "next/script";
 
 export default function Layout({ children }) {
 
@@ -15,11 +14,6 @@ export default function Layout({ children }) {
           content="crossword puzzle" 
         />
       </Head>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1123671203924892"
-        crossOrigin="anonymous"
-      />
       <main className="max-w-xl mx-auto bg-white">
         {children}
       </main>
