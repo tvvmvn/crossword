@@ -102,8 +102,8 @@ export default function Home({ d, puzzle }) {
             <div className="ml-4">
               <p className="">
                 개발자 Taemin입니다.
-                많은 분들이 매일 가볍게 즐기는 상상을 하며 만들었어요.
-                오늘도 화이팅!
+                매일 하루 10분씩 가볍게 즐겨보세요.
+                어느 순간 영어단어의 달인이 되어 있을 것입니다!
               </p>
               <div className="mt-4 flex items-center gap-2">
                 <Link href="mailto:tvvmvn@gmail.com" target="_blank">

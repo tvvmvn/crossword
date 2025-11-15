@@ -192,25 +192,25 @@ export default function Puzzle({ initialBoard, captions }) {
 
       {/* TIP */}
       <div className="mt-8 px-2">
-        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100 font-semibold">
+        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100">
           <span className="flex gap-2 items-center text-red-400 font-bold">
             <FaCircleInfo /> 팁
           </span>
           <p className="text-red-400">
             모르는 단어가 나와도 쉽게 포기하지 마세요!
-            사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 됩답니다!
+            사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 된답니다!
           </p>
         </blockquote>
       </div>
 
       {/* submit button */}
       {!done && (
-        <p className="px-2 my-4 flex justify-end">
+        <p className="px-2 mt-4">
           <button 
             type="submit"
-            className="flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2 bg-gray-200 cursor-pointer"
           >
-            정답 확인 <FaArrowRight />
+            정답 확인하기
           </button>
         </p>
       )}
