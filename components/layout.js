@@ -15,12 +15,11 @@ export default function Layout({ children }) {
           content="crossword puzzle" 
         />
       </Head>
-      <Script
+      {/* <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1123671203924892"
         crossOrigin="anonymous"
-      />
-
+      /> */}
       <main className="max-w-xl mx-auto bg-white">
         {children}
       </main>
