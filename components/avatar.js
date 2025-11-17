@@ -107,12 +107,12 @@ export default function Avatar({ d, board, words }) {
     <>
       {active && hidden}
 
-      <img
+      {/* <img
         src="/pongo.webp"
         className="w-full h-full object-cover rounded-full"
         alt="avatar"
         onClick={handleClick}
-      />
+      /> */}
     </>
   )
 }
