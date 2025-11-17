@@ -20,11 +20,11 @@ export default function Avatar({ d, board, words }) {
     }
   }, [count])
 
-  function f(d) {
+  function f(down) {
     return board.flat()
-      .filter(cell => d ? cell.down : cell.across)
+      .filter(cell => down ? cell.down : cell.across)
       .map(cell => {
-        let word = words.find(word => word.id == cell.wordId[d ? 1 : 0])
+        let word = words.find(word => word.id == cell.wordId[down ? 1 : 0])
         return {
           label: cell.label,
           about: word.name,
@@ -86,8 +86,10 @@ export default function Avatar({ d, board, words }) {
       {/* Caption */}
       {FILTER_NAMES.map(name => {
         return (
-          <div>
-            <h3>{name}</h3>
+          <section key={name}>
+            <h3 className="my-4 font-semibold">
+              {name}
+            </h3>
             <ul>
               {f(FILTER_MAP[name]).map(caption => (
                 <li key={caption.label}>
@@ -95,7 +97,7 @@ export default function Avatar({ d, board, words }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
         )
       })}
     </div>
