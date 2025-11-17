@@ -2,18 +2,12 @@ import { useState } from "react"
 import Keyboard from "./keyboard";
 import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 
-export default function Puzzle({ initialBoard, captions }) {
+export default function Puzzle({ initialBoard, words }) {
   
   const [board, setBoard] = useState(initialBoard);
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
-  const [space, setSpace] = useState([-1, -1]);
   const [downward, setDownward] = useState(false)
-  const [typing, setTyping] = useState(false)
   const [done, setDone] = useState(false);
-  const errors = board.flat()
-    .filter(cell => cell.q != cell.value)
-
-  // console.log(space)
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -23,29 +17,22 @@ export default function Puzzle({ initialBoard, captions }) {
 
   function handleClick(newCrds) {
     const [r, c] = newCrds;
+    const [a, b] = board[r][c].wordId;
 
-    // set direction to move
-    const { top, bottom, left, right } = board[r][c].around;
-    
-    const across = left || right
-    const down = top || bottom
-
-    if (across && down) {
+    if (a > 0 && b > 0) {
       // same clicked
       if (r == currentCrds[0] && c == currentCrds[1]) {
         setDownward(!downward)
       } else {
         setDownward(false)
       }
-    } else if (across) {
+    } else if (a > 0) {
       setDownward(false)
-    } else if (down) {
+    } else if (b > 0) {
       setDownward(true)
     }
     
     setCurrentCrds(newCrds)
-    setSpace(board[r][c].space)
-    setTyping(true)
   }
 
   function keyClicked(key) {
@@ -61,14 +48,17 @@ export default function Puzzle({ initialBoard, captions }) {
 
     setBoard(updatedBoard)
     
-    // move
-    const { top, bottom, left, right } = board[r][c].around;
-    const backspace = key == 'del';
-    
-    const west = !downward && backspace && left;
-    const east = !downward && !backspace && right;
-    const north = downward && backspace && top;
-    const south = downward && !backspace && bottom;
+    // check if movable
+    let top = r > 0 && board[r - 1][c].value
+    let bottom = r < board.length - 1 && board[r + 1][c].value
+    let left = c > 0 && board[r][c - 1].value
+    let right = c < board[r].length - 1 && board[r][c + 1].value
+
+    // direction to move
+    const west = !downward && key == 'del' && left;
+    const east = !downward && key != 'del' && right;
+    const north = downward && key == 'del' && top;
+    const south = downward && key != 'del' && bottom;
     
     if (west) {
       setCurrentCrds([r, c - 1])
@@ -81,38 +71,70 @@ export default function Puzzle({ initialBoard, captions }) {
     }
   }
 
-  function bgColor(r, c, q, value, _group) {
+  function bgColor(cellCrds, q, value, wordId) {
+
+    let [cr, cc] = currentCrds;
+    let [r, c] = cellCrds;
+
+    // give marks
     if (done) {
       if (q != value) {
         return 'bg-red-100'
       }
       return 'bg-blue-100'
     }
+    
+    if (cr < 0 || cc < 0) {
+      return 'bg-white';
+    }
 
     // focused cell
-    if (r == currentCrds[0] && c == currentCrds[1]) {
+    if (r == cr && c == cc) {
       return 'bg-yellow-300'
-    }
-
-    // active height
-    if (downward && space[1] == _group[1]) {
-      return 'bg-yellow-100'
-    }
+    } 
     
-    // active width
-    if (!downward && space[0] == _group[0]) {
-      return 'bg-yellow-100'
+    // across or down cells
+    if (!downward) {
+      if (board[cr][cc].wordId[0] == wordId[0]) {
+        return 'bg-yellow-100'
+      }
+    } else {
+      if (board[cr][cc].wordId[1] == wordId[1]) {
+        return 'bg-yellow-100'
+      }
     }
 
     return 'bg-white'
   }
+
+  function hasError() {
+    return board.flat()
+      .filter(cell => cell.q != cell.value)
+      .length > 0
+  }
+
+  const word = words.find(word => {
+    let [r, c] = currentCrds;
+    if (r + c < 0) return;
+
+    let [a, b] = board[r][c].wordId;
+
+    let across = !downward && a == word.id
+    let down = downward && b == word.id
+
+    if (across || down) {
+      return word;
+    }
+  })
+
+  console.log(word)
 
   return (
     <form onSubmit={handleSubmit}>
       {/* result messages */}
       {done && (
         <p className="my-4 px-2">
-          {errors.length ? (
+          {hasError() ? (
             <span className="text-red-400">
               내일 다시 만나요 🥲
             </span>
@@ -125,62 +147,52 @@ export default function Puzzle({ initialBoard, captions }) {
       )}
 
       {/* board */}
-      <table className="w-full">
-        <tbody className="border border-gray-400 divide-y divide-gray-400 bg-gray-100">
-          {board.map((row, r) => (
-            <tr 
-              key={r}
-              id="tr"
-              className="h-1/12 grid grid-cols-12 divide-x divide-gray-400"
-            >
-              {row.map((col, c) => (
-                <td 
-                  key={c} 
-                  id="td"
-                  className="relative pt-[100%]"
-                >
-                  {!!col.active && (
-                    <>
-                      {!!col.label && (
-                        <label
-                          htmlFor={col.id}
-                          className="absolute top-0 left-px z-10 text-xs"
-                        >
-                          {col.label}
-                        </label>
-                      )}
-                      <input
-                        id={col.id}
-                        type="text"
-                        className={`absolute inset-0 text-center outline-none font-bold ${bgColor(r, c, col.q, col.value, col.space)}`}
-                        value={done ? col.value : col.q}
-                        onClick={done ? null : (e) => handleClick([r, c])}
-                        readOnly
-                      />
-                    </>
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="px-2">
+        <table className="w-full">
+          <tbody className="border border-gray-400 divide-y divide-gray-400 bg-gray-100">
+            {board.map((row, r) => (
+              <tr 
+                key={r}
+                className="h-1/12 grid grid-cols-12 divide-x divide-gray-400"
+              >
+                {row.map((col, c) => (
+                  <td 
+                    key={c} 
+                    className="relative pt-[100%]"
+                  >
+                    {col.value && (
+                      <>
+                        {!!col.label && (
+                          <label
+                            htmlFor={col.id}
+                            className="absolute top-0 left-px z-10 text-xs"
+                          >
+                            {col.label}
+                          </label>
+                        )}
+                        <input
+                          id={col.id}
+                          type="text"
+                          className={`absolute inset-0 text-center outline-none font-bold ${bgColor([r, c], col.q, col.value, col.wordId)}`}
+                          value={done ? col.value : col.q}
+                          onClick={done ? null : (e) => handleClick([r, c])}
+                          readOnly
+                        />
+                      </>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Caption */}
       <div className="my-4 px-2">
         <div className="bg-gray-100 p-2">
           <p className="">
-            {captions.map(caption => {
-              if (downward) {
-                if (caption.label == space[1] && caption.down) {
-                  return caption.content
-                }
-              } else { 
-                if (caption.label == space[0] && !caption.down) {
-                  return caption.content
-                }
-              }
-            })}
+            {word ? word.meaning : '의미'}
           </p>
         </div>
       </div>

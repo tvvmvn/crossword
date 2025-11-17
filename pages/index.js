@@ -1,5 +1,4 @@
 import Link from "next/link"
-import createPuzzle from "@/lib/service/main"
 import { getDateTime } from "@/lib/time"
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
@@ -8,16 +7,23 @@ import Layout from "@/components/layout"
 import Avatar from "@/components/avatar"
 import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
 import { AiOutlineMail } from "react-icons/ai";
+import getWords from "@/lib/data"
+import PuzzleGenerator from "@/lib/PuzzleGenerator"
+import Board from "@/lib/Board"
 
 export async function getStaticProps() {
   try {
-    const puzzle = await createPuzzle();
-    // console.log(puzzle);
-    
+    let words = await getWords();
+    words = words.sort((a, b) => b.length - a.length);
+
+    let puzzleGenerator = new PuzzleGenerator(new Board(12, 12));
+    let board = puzzleGenerator.create(words);
+
     return {
       props: {
         d: getDateTime(),
-        puzzle
+        board,
+        words
       }
     }
   } catch (ex) {
@@ -26,9 +32,8 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({ d, puzzle }) {
-
-  const { board, captions } = puzzle;
+export default function Home({ d, board, words }) {
+  console.log(board)
   const { year, month, date, day, hour, minutes } = d;
 
   return (
@@ -55,7 +60,7 @@ export default function Home({ d, puzzle }) {
       <div className="mt-2">
         <Puzzle 
           initialBoard={board}
-          captions={captions}
+          words={words}
         />
       </div>
 
@@ -96,7 +101,7 @@ export default function Home({ d, puzzle }) {
               <Avatar 
                 d={d} 
                 board={board} 
-                captions={captions}
+                words={words}
               />
             </div>
             <div className="ml-4">

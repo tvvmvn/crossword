@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 
 // captions
 const FILTER_MAP = {
-  가로: (caption) => !caption.down,
-  세로: (caption) => caption.down
+  가로: 0,
+  세로: 1,
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
-export default function Avatar({ d, board, captions }) {
+export default function Avatar({ d, board, words }) {
 
   const [count, setCount] = useState(0)
   const [active, setActive] = useState(false)
@@ -19,6 +19,19 @@ export default function Avatar({ d, board, captions }) {
       setActive(true)
     }
   }, [count])
+
+  function f(d) {
+    return board.flat()
+      .filter(cell => d ? cell.down : cell.across)
+      .map(cell => {
+        let word = words.find(word => word.id == cell.wordId[d ? 1 : 0])
+        return {
+          label: cell.label,
+          about: word.name,
+          content: word.meaning,
+        }
+      })
+  }
 
   function handleClick(e) {
     setCount(count + 1)
@@ -44,8 +57,7 @@ export default function Avatar({ d, board, captions }) {
           {board.map((row, r) => (
             <tr
               key={r}
-              className="divide-x divide-gray-700 grid"
-              style={{ gridTemplateColumns: `repeat(${board[r].length}, minmax(0, 1fr))` }}
+              className="divide-x divide-gray-700 grid grid-cols-12"
             >
               {row.map((col, c) => (
                 <td key={c} className="pt-[100%] relative">
@@ -57,7 +69,7 @@ export default function Avatar({ d, board, captions }) {
                       {col.label}
                     </label>
                   )}
-                  {col.active && (
+                  {col.value && (
                     <input
                       id={col.id}
                       type="text" 
@@ -71,24 +83,21 @@ export default function Avatar({ d, board, captions }) {
         </tbody>
       </table>
 
-      {/* captions */}
-      <div className="">
-        {FILTER_NAMES.map(name => (
-          <section key={name}>
-            <h3 className="my-4 font-semibold flex gap-2 items-center">
-              {name} 힌트
-            </h3>
-
+      {/* Caption */}
+      {FILTER_NAMES.map(name => {
+        return (
+          <div>
+            <h3>{name}</h3>
             <ul>
-              {captions.filter(FILTER_MAP[name]).map(caption => (
-                <li key={caption.id}>
-                  {caption.label}. {caption.content}
+              {f(FILTER_MAP[name]).map(caption => (
+                <li key={caption.label}>
+                  {caption.label} {caption.content}
                 </li>
               ))}
             </ul>
-          </section>
-        ))}
-      </div>
+          </div>
+        )
+      })}
     </div>
   )
 
