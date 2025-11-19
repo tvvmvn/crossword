@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { FaLink, FaShareNodes } from "react-icons/fa6";
+import { FiShare2 } from "react-icons/fi";
 
 export default function Share() {
 
   const [message, setMessage] = useState('');
 
-  function f() {
+  function copy() {
     if (message) return;
 
     navigator.clipboard.writeText(location.href)
@@ -22,27 +23,25 @@ export default function Share() {
   }
 
   return (
-    <div className="mt-4 flex justify-end">
-      <div 
-        id="drop-container"
-        className="relative"
+    <div
+      id="drop-container"
+      className="relative"
+    >
+      <button
+        id="drop-btn"
+        className="cursor-pointer text-blue-400"
+        onClick={copy}
       >
-        <button
-          id="drop-btn"
-          className="px-2 py-1 text-blue-400 font-semibold flex items-center gap-1 cursor-pointer"
-          onClick={f}
+        <FiShare2 size={20} />
+      </button>
+      {message && (
+        <p
+          id="drop-content"
+          className="absolute right-0 w-40 px-2 py-1 z-20 bg-white shadow rounded-md"
         >
-          <FaLink /> 공유하기
-        </button>
-        {message && (
-          <p 
-            id="drop-content"
-            className="absolute right-0 w-40 px-2 py-1 z-20 bg-white shadow rounded-md"
-          >
-            {message}
-          </p>
-        )}
-      </div>
+          {message}
+        </p>
+      )}
     </div>
   )
 }

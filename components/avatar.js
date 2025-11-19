@@ -2,14 +2,15 @@ import { useEffect, useState } from "react"
 
 // captions
 const FILTER_MAP = {
-  가로: 0,
-  세로: 1,
+  가로: 'across',
+  세로: 'down',
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
 
-export default function Avatar({ d, board, words }) {
+export default function Avatar({ d, puzzle }) {
 
+  const { board, captions } = puzzle;
   const [count, setCount] = useState(0)
   const [active, setActive] = useState(false)
   const { month, date } = d;
@@ -19,19 +20,6 @@ export default function Avatar({ d, board, words }) {
       setActive(true)
     }
   }, [count])
-
-  function f(down) {
-    return board.flat()
-      .filter(cell => down ? cell.down : cell.across)
-      .map(cell => {
-        let word = words.find(word => word.id == cell.wordId[down ? 1 : 0])
-        return {
-          label: cell.label,
-          about: word.name,
-          content: word.meaning,
-        }
-      })
-  }
 
   function handleClick(e) {
     setCount(count + 1)
@@ -44,7 +32,7 @@ export default function Avatar({ d, board, words }) {
 
   const hidden = (
     <div 
-      className="fixed inset-0 bg-white px-2 overflow-auto z-90"
+      className="fixed inset-0 bg-white px-2 pb-8 overflow-auto z-90"
       onClick={handleClose}
     >
       <h1 className="my-8 text-2xl font-semibold text-center">
@@ -52,6 +40,7 @@ export default function Avatar({ d, board, words }) {
         <br />
         영어단어 퀴즈 🇰🇷🇺🇸
       </h1>
+      
       <table className="w-full">
         <tbody className="divide-y divide-gray-700 border bg-black">
           {board.map((row, r) => (
@@ -91,7 +80,7 @@ export default function Avatar({ d, board, words }) {
               {name}
             </h3>
             <ul>
-              {f(FILTER_MAP[name]).map(caption => (
+              {captions[FILTER_MAP[name]].map(caption => (
                 <li key={caption.label}>
                   {caption.label} {caption.content}
                 </li>

@@ -9,7 +9,7 @@ export default function Keyboard({
 }) {
 
   return (
-    <div className="h-[180px] bg-gray-100 p-2">
+    <div className="h-[200px] bg-gray-100 px-2 py-4">
       <div className="h-full grid grid-cols-20 gap-1">
         {keys.map((row, r) => row.map((col, c) => (
           <button

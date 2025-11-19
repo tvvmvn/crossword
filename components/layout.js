@@ -8,11 +8,11 @@ export default function Layout({ children }) {
     <div className="bg-gray-100">
       <Head>
         <title>
-          Crossword Puzzle
+          영어단어 십자말풀이
         </title>
         <meta 
           name="description" 
-          content="crossword puzzle" 
+          content="십자말풀이로 재미있게 공부하는 영어단어!" 
         />
       </Head>
       {/* <Script

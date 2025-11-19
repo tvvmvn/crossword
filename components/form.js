@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isValidEmail } from "@/lib/validate";
+import { isValidEmail } from "@/lib/client/validate";
 
 export default function Form() {
 
@@ -59,18 +59,18 @@ export default function Form() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <input
           id="email"
           type="text"
-          className="grow px-4 py-2 border border-gray-200 outline-none"
+          className="grow px-4 py-2 border-b outline-none"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="이메일을 입력하세요.."
         />
         <button
           type="submit"
-          className="px-2 py-1 bg-gray-200 font-semibold cursor-pointer"
+          className="px-2 py-1 border-2 font-semibold cursor-pointer"
         >
           구독하기
         </button>

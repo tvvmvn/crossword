@@ -5,25 +5,28 @@ import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import Layout from "@/components/layout"
 import Avatar from "@/components/avatar"
-import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
-import { AiOutlineMail } from "react-icons/ai";
 import getWords from "@/lib/data"
 import PuzzleGenerator from "@/lib/PuzzleGenerator"
 import Board from "@/lib/Board"
+import HeaderAd from "@/components/header-ad"
+import FooterAd from "@/components/footer-ad"
+import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
+import { AiOutlineMail } from "react-icons/ai";
+import { FaRegCalendarCheck } from "react-icons/fa6";
+import { PiMailboxDuotone, PiCheckerboardFill } from "react-icons/pi";
+import { AiOutlineBell } from "react-icons/ai";
+import { HiPuzzlePiece, HiOutlinePuzzlePiece } from "react-icons/hi2";
 
 export async function getStaticProps() {
   try {
-    let words = await getWords();
-    words = words.sort((a, b) => b.length - a.length);
-
-    let puzzleGenerator = new PuzzleGenerator(new Board(12, 12));
-    let board = puzzleGenerator.create(words);
+    let words = await getWords(30);
+    let puzzleGenerator = new PuzzleGenerator(new Board(12, 12), words);
+    let puzzle = puzzleGenerator.create();
 
     return {
       props: {
         d: getDateTime(),
-        board,
-        words
+        puzzle
       }
     }
   } catch (ex) {
@@ -32,40 +35,56 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({ d, board, words }) {
-  console.log(board)
+export default function Home({ d, puzzle }) {
+  console.log(puzzle)
   const { year, month, date, day, hour, minutes } = d;
 
   return (
     <Layout>
       {/* Header */}
-      <header className="pt-4 px-2">
-        <p className="my-2 font-semibold">
-          CrossDays [{hour}:{minutes}]
-        </p>
-        <h1 className="my-4 text-2xl font-semibold">
-          {month}월 {date}일 {day}요일 퀴즈 🤓
-        </h1>
-        <p className="text-red-400 italic">
-          "🗓️ 매일 업데이트됩니다"
-        </p>
+      <header className="border-b border-gray-200">
+        <div className="px-4 py-2 flex justify-between items-center">
+          <div id="logo" className="flex items-center">
+            <PiCheckerboardFill 
+              size={28} 
+              className="text-black" 
+            />
+            <h1 className="ml-2 font-semibold">
+              영어단어 십자말풀이
+            </h1>
+          </div>
+          <Share />
+        </div>
       </header>
 
-      {/* Share button */}
       <div className="mt-8 px-2">
-        <Share />
+        <h1 className="my-4 text-3xl font-semibold">
+          {month}월 {date}일 {day}요일 🤓
+        </h1>
+        <div className="flex items-center">
+          <FaRegCalendarCheck 
+            size={20} 
+            className="text-red-400" 
+          /> 
+          <span className="ml-2 text-red-400">
+            매일 업데이트됩니다 [{d.hour}:{d.minutes}]
+          </span>
+        </div>
       </div>
+
+      {/* Heade Ads */}
+      <HeaderAd />
 
       {/* Puzzle */}
-      <div className="mt-2">
-        <Puzzle 
-          initialBoard={board}
-          words={words}
-        />
+      <div className="mt-12">
+        <Puzzle puzzle={puzzle} />
       </div>
 
+      {/* Footer Ads */}
+      <FooterAd />
+
       <footer className="mt-8 pt-8 px-2 pb-12">
-        <h2 className="my-8 text-2xl font-semibold">
+        <h2 className="my-8 text-3xl font-semibold">
           더 읽기
         </h2>
         {/* About */}
@@ -82,9 +101,12 @@ export default function Home({ d, board, words }) {
 
         {/* Subscribe form */}
         <section className="mt-8">
-          <h3 className="my-4 text-lg font-semibold">
-            구독
-          </h3>
+          <div className="my-4 flex gap-2 items-center">
+            <h3 className="text-lg font-semibold">
+              구독
+            </h3>
+            <AiOutlineBell size={24} />
+          </div>
           <p className="my-4">
             개발자의 새로운 소식을 가장 먼저 받아보세요!
           </p>
@@ -98,11 +120,7 @@ export default function Home({ d, board, words }) {
           </h3>
           <div className="flex">
             <div className="w-20 h-20 shrink-0">
-              <Avatar 
-                d={d} 
-                board={board} 
-                words={words}
-              />
+              <Avatar d={d} puzzle={puzzle} />
             </div>
             <div className="ml-4">
               <p className="">
@@ -112,12 +130,13 @@ export default function Home({ d, board, words }) {
               </p>
               <div className="mt-4 flex items-center gap-2">
                 <Link href="mailto:tvvmvn@gmail.com" target="_blank">
-                  <AiOutlineMail size={26} />
+                  {/* <AiOutlineMail size={26} /> */}
+                  <PiMailboxDuotone size={28} />
                 </Link>
                 <Link href="https://github.com/tvvmvn" target="_blank">
                   <FaGithub size={24} />
                 </Link>
-                <Link href="" target="_blank">
+                <Link href="https://instagram.com/tvvmvn" target="_blank">
                   <FaInstagram size={24} />
                 </Link>
               </div>

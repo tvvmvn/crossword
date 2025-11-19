@@ -1,10 +1,11 @@
 import { useState } from "react"
 import Keyboard from "./keyboard";
 import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
+import Verbose from "./Verbose";
 
-export default function Puzzle({ initialBoard, words }) {
+export default function Puzzle({ puzzle }) {
   
-  const [board, setBoard] = useState(initialBoard);
+  const [board, setBoard] = useState(puzzle.board);
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
   const [downward, setDownward] = useState(false)
   const [done, setDone] = useState(false);
@@ -85,7 +86,7 @@ export default function Puzzle({ initialBoard, words }) {
     }
     
     if (cr < 0 || cc < 0) {
-      return 'bg-white';
+      return 'bg-gray-100';
     }
 
     // focused cell
@@ -104,7 +105,7 @@ export default function Puzzle({ initialBoard, words }) {
       }
     }
 
-    return 'bg-white'
+    return 'bg-gray-100'
   }
 
   function hasError() {
@@ -113,21 +114,16 @@ export default function Puzzle({ initialBoard, words }) {
       .length > 0
   }
 
-  const word = words.find(word => {
-    let [r, c] = currentCrds;
-    if (r + c < 0) return;
+  const caption = puzzle.captions[downward ? 'down' : 'across']
+    .find(caption => {
+      let [r, c] = currentCrds;
+      if (r + c < 0) return;
 
-    let [a, b] = board[r][c].wordId;
+      let [a, b] = board[r][c].wordId;
+      let wordId = downward ? b : a;
 
-    let across = !downward && a == word.id
-    let down = downward && b == word.id
-
-    if (across || down) {
-      return word;
-    }
-  })
-
-  console.log(word)
+      return wordId == caption.wordId;
+    })
 
   return (
     <form onSubmit={handleSubmit}>
@@ -149,11 +145,11 @@ export default function Puzzle({ initialBoard, words }) {
       {/* board */}
       <div className="px-2">
         <table className="w-full">
-          <tbody className="border border-gray-400 divide-y divide-gray-400 bg-gray-100">
+          <tbody className="border-2 border-gray-300 divide-y-2 divide-gray-300">
             {board.map((row, r) => (
               <tr 
                 key={r}
-                className="h-1/12 grid grid-cols-12 divide-x divide-gray-400"
+                className="h-1/12 grid grid-cols-12 divide-x-2 divide-gray-300"
               >
                 {row.map((col, c) => (
                   <td 
@@ -190,9 +186,9 @@ export default function Puzzle({ initialBoard, words }) {
 
       {/* Caption */}
       <div className="my-4 px-2">
-        <div className="bg-gray-100 p-2">
+        <div className="p-2 border border-gray-200 text-center">
           <p className="">
-            {word ? word.meaning : '의미'}
+            {caption ? caption.content : '의미가 여기에 나타나요'}
           </p>
         </div>
       </div>
@@ -201,6 +197,9 @@ export default function Puzzle({ initialBoard, words }) {
       <Keyboard
         keyClicked={keyClicked}
       />
+
+      {/* Verbose to be permitted in ads */}
+      <Verbose captions={puzzle.captions} />
 
       {/* TIP */}
       <div className="mt-8 px-2">
@@ -217,10 +216,10 @@ export default function Puzzle({ initialBoard, words }) {
 
       {/* submit button */}
       {!done && (
-        <p className="px-2 mt-4">
+        <p className="px-2 mt-8">
           <button 
             type="submit"
-            className="px-4 py-2 bg-gray-200 cursor-pointer"
+            className="px-4 py-2 border-2 font-semibold cursor-pointer"
           >
             정답 확인하기
           </button>
