@@ -58,7 +58,7 @@ export default function Home({ d, puzzle }) {
       </header>
 
       <div className="mt-8 px-2">
-        <h1 className="my-4 text-3xl font-semibold">
+        <h1 className="my-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 🤓
         </h1>
         <div className="flex items-center">
@@ -84,7 +84,7 @@ export default function Home({ d, puzzle }) {
       <FooterAd />
 
       <footer className="mt-8 pt-8 px-2 pb-12">
-        <h2 className="my-8 text-3xl font-semibold">
+        <h2 className="my-8 text-2xl font-semibold">
           더 읽기
         </h2>
         {/* About */}
@@ -119,11 +119,11 @@ export default function Home({ d, puzzle }) {
             안녕하세요!
           </h3>
           <div className="flex">
-            <div className="w-20 h-20 shrink-0">
+            <div className="w-16 h-16 shrink-0">
               <Avatar d={d} puzzle={puzzle} />
             </div>
             <div className="ml-4">
-              <p className="">
+              <p className="my-2 text-sm">
                 개발자 Taemin입니다.
                 매일 하루 10분씩 가볍게 즐겨보세요.
                 어느 순간 영어단어의 달인이 되어 있을 것입니다!

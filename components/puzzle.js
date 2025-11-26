@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Keyboard from "./keyboard";
 import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
-import Verbose from "./Verbose";
+import Answer from "./answer";
 
 export default function Puzzle({ puzzle }) {
   
@@ -9,6 +9,10 @@ export default function Puzzle({ puzzle }) {
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
   const [downward, setDownward] = useState(false)
   const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    location.href = '#message';
+  }, [done])
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,18 +22,18 @@ export default function Puzzle({ puzzle }) {
 
   function handleClick(newCrds) {
     const [r, c] = newCrds;
-    const [a, b] = board[r][c].wordId;
+    const [acrossId, downId] = board[r][c].wordId;
 
-    if (a > 0 && b > 0) {
+    if (acrossId > 0 && downId > 0) {
       // same clicked
       if (r == currentCrds[0] && c == currentCrds[1]) {
         setDownward(!downward)
       } else {
         setDownward(false)
       }
-    } else if (a > 0) {
+    } else if (acrossId > 0) {
       setDownward(false)
-    } else if (b > 0) {
+    } else if (downId > 0) {
       setDownward(true)
     }
     
@@ -74,10 +78,9 @@ export default function Puzzle({ puzzle }) {
 
   function bgColor(cellCrds, q, value, wordId) {
 
-    let [cr, cc] = currentCrds;
     let [r, c] = cellCrds;
 
-    // give marks
+    // result marks
     if (done) {
       if (q != value) {
         return 'bg-red-100'
@@ -85,33 +88,28 @@ export default function Puzzle({ puzzle }) {
       return 'bg-blue-100'
     }
     
-    if (cr < 0 || cc < 0) {
+    // before beginning
+    if (currentCrds[0] + currentCrds[1] < 0) {
       return 'bg-gray-100';
     }
 
     // focused cell
-    if (r == cr && c == cc) {
+    if (r == currentCrds[0] && c == currentCrds[1]) {
       return 'bg-yellow-300'
     } 
     
     // across or down cells
     if (!downward) {
-      if (board[cr][cc].wordId[0] == wordId[0]) {
+      if (board[currentCrds[0]][currentCrds[1]].wordId[0] == wordId[0]) {
         return 'bg-yellow-100'
       }
     } else {
-      if (board[cr][cc].wordId[1] == wordId[1]) {
+      if (board[currentCrds[0]][currentCrds[1]].wordId[1] == wordId[1]) {
         return 'bg-yellow-100'
       }
     }
 
-    return 'bg-gray-100'
-  }
-
-  function hasError() {
-    return board.flat()
-      .filter(cell => cell.q != cell.value)
-      .length > 0
+    return 'bg-gray-100';
   }
 
   const caption = puzzle.captions[downward ? 'down' : 'across']
@@ -119,27 +117,31 @@ export default function Puzzle({ puzzle }) {
       let [r, c] = currentCrds;
       if (r + c < 0) return;
 
-      let [a, b] = board[r][c].wordId;
-      let wordId = downward ? b : a;
+      let [acrossId, downId] = board[r][c].wordId;
+      let wordId = downward ? downId : acrossId;
 
       return wordId == caption.wordId;
     })
+
+  const hasError = board.flat()
+    .filter(cell => cell.q != cell.value)
+    .length > 0
 
   return (
     <form onSubmit={handleSubmit}>
       {/* result messages */}
       {done && (
-        <p className="my-4 px-2">
-          {hasError() ? (
-            <span className="text-red-400">
+        <div id="message" className="px-2 py-4">
+          {hasError ? (
+            <p className="text-lg font-semibold text-red-400">
               내일 다시 만나요 🥲
-            </span>
+            </p>
           ) : (
-            <span className="text-blue-400">
+            <p className="text-lg font-semibold text-blue-400">
               축하합니다! 🎉
-            </span>
+            </p>
           )}
-        </p>
+        </div>
       )}
 
       {/* board */}
@@ -184,46 +186,44 @@ export default function Puzzle({ puzzle }) {
         </table>
       </div>
 
-      {/* Caption */}
-      <div className="my-4 px-2">
-        <div className="p-2 border border-gray-200 text-center">
-          <p className="">
-            {caption ? caption.content : '의미가 여기에 나타나요'}
-          </p>
-        </div>
-      </div>
+      {done ? (
+        <Answer captions={puzzle.captions} />
+      ) : (
+        <>
+          {/* Captions */}
+          <div className="my-4 px-2">
+            <div className="p-2 bg-stone-100 text-center">
+              <p className="">
+                {caption ? caption.content : '의미가 여기에 나타나요'}
+              </p>
+            </div>
+          </div>
+          
+          {/* Keyboard */}
+          <Keyboard
+            keyClicked={keyClicked}
+          />
 
-      {/* virtual keyboard */}
-      <Keyboard
-        keyClicked={keyClicked}
-      />
+          {/* TIP */}
+          <div className="mt-12 px-2">
+            <blockquote className="px-4 py-2 border-l-6 border-red-300 bg-red-100">
+              <p className="my-2 text-sm text-red-400">
+                모르는 단어가 나와도 쉽게 포기하지 마세요!
+                사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 된답니다!
+              </p>
+            </blockquote>
+          </div>
 
-      {/* Verbose to be permitted in ads */}
-      <Verbose captions={puzzle.captions} />
-
-      {/* TIP */}
-      <div className="mt-8 px-2">
-        <blockquote className="p-2 border-l-6 border-red-300 bg-red-100">
-          <span className="flex gap-2 items-center text-red-400 font-bold">
-            <FaCircleInfo /> 팁
-          </span>
-          <p className="text-red-400">
-            모르는 단어가 나와도 쉽게 포기하지 마세요!
-            사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 된답니다!
-          </p>
-        </blockquote>
-      </div>
-
-      {/* submit button */}
-      {!done && (
-        <p className="px-2 mt-8">
-          <button 
-            type="submit"
-            className="px-4 py-2 border-2 font-semibold cursor-pointer"
-          >
-            정답 확인하기
-          </button>
-        </p>
+          {/* Submit button */}
+          <div className="px-2 mt-4">
+            <button
+              type="submit"
+              className="px-4 py-2 border-2 font-semibold rounded-lg cursor-pointer"
+            >
+              정답 확인하기
+            </button>
+          </div>
+        </>
       )}
     </form>
   )

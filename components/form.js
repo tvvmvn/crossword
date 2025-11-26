@@ -70,7 +70,7 @@ export default function Form() {
         />
         <button
           type="submit"
-          className="px-2 py-1 border-2 font-semibold cursor-pointer"
+          className="px-2 py-1 border-2 font-semibold rounded-lg cursor-pointer"
         >
           구독하기
         </button>
