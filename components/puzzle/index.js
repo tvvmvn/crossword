@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Keyboard from "./keyboard";
-import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 import Answer from "./answer";
+import Board from "./board";
+import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 
 export default function Puzzle({ puzzle }) {
   
@@ -9,9 +10,15 @@ export default function Puzzle({ puzzle }) {
   const [currentCrds, setCurrentCrds] = useState([-1, -1])
   const [downward, setDownward] = useState(false)
   const [done, setDone] = useState(false);
+  const messageRef = useRef(null);
 
   useEffect(() => {
-    location.href = '#message';
+    if (done) {
+      window.scrollTo({
+        top: messageRef.current.offsetTop,
+        behavior: "smooth"
+      });
+    }
   }, [done])
 
   function handleSubmit(e) {
@@ -76,42 +83,6 @@ export default function Puzzle({ puzzle }) {
     }
   }
 
-  function bgColor(cellCrds, q, value, wordId) {
-
-    let [r, c] = cellCrds;
-
-    // result marks
-    if (done) {
-      if (q != value) {
-        return 'bg-red-100'
-      }
-      return 'bg-blue-100'
-    }
-    
-    // before beginning
-    if (currentCrds[0] + currentCrds[1] < 0) {
-      return 'bg-gray-100';
-    }
-
-    // focused cell
-    if (r == currentCrds[0] && c == currentCrds[1]) {
-      return 'bg-yellow-300'
-    } 
-    
-    // across or down cells
-    if (!downward) {
-      if (board[currentCrds[0]][currentCrds[1]].wordId[0] == wordId[0]) {
-        return 'bg-yellow-100'
-      }
-    } else {
-      if (board[currentCrds[0]][currentCrds[1]].wordId[1] == wordId[1]) {
-        return 'bg-yellow-100'
-      }
-    }
-
-    return 'bg-gray-100';
-  }
-
   const caption = puzzle.captions[downward ? 'down' : 'across']
     .find(caption => {
       let [r, c] = currentCrds;
@@ -131,7 +102,7 @@ export default function Puzzle({ puzzle }) {
     <form onSubmit={handleSubmit}>
       {/* result messages */}
       {done && (
-        <div id="message" className="px-2 py-4">
+        <div className="px-2 py-4" ref={messageRef}>
           {hasError ? (
             <p className="text-lg font-semibold text-red-400">
               내일 다시 만나요 🥲
@@ -146,44 +117,13 @@ export default function Puzzle({ puzzle }) {
 
       {/* board */}
       <div className="px-2">
-        <table className="w-full">
-          <tbody className="border-2 border-gray-300 divide-y-2 divide-gray-300">
-            {board.map((row, r) => (
-              <tr 
-                key={r}
-                className="h-1/12 grid grid-cols-12 divide-x-2 divide-gray-300"
-              >
-                {row.map((col, c) => (
-                  <td 
-                    key={c} 
-                    className="relative pt-[100%]"
-                  >
-                    {col.value && (
-                      <>
-                        {!!col.label && (
-                          <label
-                            htmlFor={col.id}
-                            className="absolute top-0 left-px z-10 text-xs"
-                          >
-                            {col.label}
-                          </label>
-                        )}
-                        <input
-                          id={col.id}
-                          type="text"
-                          className={`absolute inset-0 text-center outline-none font-bold ${bgColor([r, c], col.q, col.value, col.wordId)}`}
-                          value={done ? col.value : col.q}
-                          onClick={done ? null : (e) => handleClick([r, c])}
-                          readOnly
-                        />
-                      </>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Board 
+          board={board} 
+          currentCrds={currentCrds}
+          downward={downward}
+          handleClick={handleClick} 
+          done={done} 
+        />
       </div>
 
       {done ? (
@@ -191,18 +131,18 @@ export default function Puzzle({ puzzle }) {
       ) : (
         <>
           {/* Captions */}
-          <div className="my-4 px-2">
-            <div className="p-2 bg-stone-100 text-center">
-              <p className="">
-                {caption ? caption.content : '의미가 여기에 나타나요'}
-              </p>
-            </div>
+          <div className="mt-4 px-2">
+            <p className="text-center border-b border-gray-300 pb-1">
+              {caption ? caption.content : '의미가 여기에 나타나요'}
+            </p>
           </div>
           
           {/* Keyboard */}
-          <Keyboard
-            keyClicked={keyClicked}
-          />
+          <div className="mt-4">
+            <Keyboard
+              keyClicked={keyClicked}
+            />
+          </div>
 
           {/* TIP */}
           <div className="mt-12 px-2">

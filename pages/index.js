@@ -1,15 +1,17 @@
 import Link from "next/link"
+import PuzzleGenerator from "@/lib/PuzzleGenerator"
+import Board from "@/lib/Board"
+import getWords from "@/lib/data"
 import { getDateTime } from "@/lib/time"
+// components
 import Form from "@/components/form"
 import Puzzle from "@/components/puzzle"
 import Share from "@/components/share"
 import Layout from "@/components/layout"
 import Avatar from "@/components/avatar"
-import getWords from "@/lib/data"
-import PuzzleGenerator from "@/lib/PuzzleGenerator"
-import Board from "@/lib/Board"
 import HeaderAd from "@/components/header-ad"
 import FooterAd from "@/components/footer-ad"
+// icons
 import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
 import { AiOutlineMail } from "react-icons/ai";
 import { FaRegCalendarCheck } from "react-icons/fa6";
@@ -36,6 +38,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ d, puzzle }) {
+  
   console.log(puzzle)
   const { year, month, date, day, hour, minutes } = d;
 
@@ -57,6 +60,7 @@ export default function Home({ d, puzzle }) {
         </div>
       </header>
 
+      {/* Title */}
       <div className="mt-8 px-2">
         <h1 className="my-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 🤓
@@ -72,7 +76,7 @@ export default function Home({ d, puzzle }) {
         </div>
       </div>
 
-      {/* Heade Ads */}
+      {/* Top Ads */}
       <HeaderAd />
 
       {/* Puzzle */}
@@ -80,13 +84,15 @@ export default function Home({ d, puzzle }) {
         <Puzzle puzzle={puzzle} />
       </div>
 
-      {/* Footer Ads */}
+      {/* Bottom Ads */}
       <FooterAd />
 
+      {/* Footer */}
       <footer className="mt-8 pt-8 px-2 pb-12">
         <h2 className="my-8 text-2xl font-semibold">
           더 읽기
         </h2>
+
         {/* About */}
         <section className="">
           <h3 className="my-4 text-lg font-semibold">
@@ -99,7 +105,7 @@ export default function Home({ d, puzzle }) {
           </Link>
         </section>
 
-        {/* Subscribe form */}
+        {/* Subscribe */}
         <section className="mt-8">
           <div className="my-4 flex gap-2 items-center">
             <h3 className="text-lg font-semibold">
@@ -113,14 +119,17 @@ export default function Home({ d, puzzle }) {
           <Form />
         </section>
 
-        {/* About */}
+        {/* Terms */}
         <section className="mt-8">
           <h3 className="my-4 text-lg font-semibold">
             안녕하세요!
           </h3>
           <div className="flex">
             <div className="w-16 h-16 shrink-0">
-              <Avatar d={d} puzzle={puzzle} />
+              <Avatar 
+                d={d} 
+                puzzle={puzzle} 
+              />
             </div>
             <div className="ml-4">
               <p className="my-2 text-sm">
@@ -130,7 +139,6 @@ export default function Home({ d, puzzle }) {
               </p>
               <div className="mt-4 flex items-center gap-2">
                 <Link href="mailto:tvvmvn@gmail.com" target="_blank">
-                  {/* <AiOutlineMail size={26} /> */}
                   <PiMailboxDuotone size={28} />
                 </Link>
                 <Link href="https://github.com/tvvmvn" target="_blank">
