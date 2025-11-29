@@ -2,15 +2,18 @@ import { useEffect, useRef, useState } from "react"
 import Keyboard from "./keyboard";
 import Answer from "./answer";
 import Board from "./board";
-import { FaCircleInfo, FaArrowRight, FaKey } from 'react-icons/fa6';
 
 export default function Puzzle({ puzzle }) {
   
   const [board, setBoard] = useState(puzzle.board);
-  const [currentCrds, setCurrentCrds] = useState([-1, -1])
-  const [downward, setDownward] = useState(false)
+  const [activeCell, setActiveCell] = useState('')
+  const [orientation, setOrientation] = useState('across')
   const [done, setDone] = useState(false);
   const messageRef = useRef(null);
+
+  const cell = board.flat().find(cell => cell.id == activeCell)
+
+  // console.log('activeCell', activeCell)
 
   useEffect(() => {
     if (done) {
@@ -27,39 +30,39 @@ export default function Puzzle({ puzzle }) {
     setDone(true)
   }
 
-  function handleClick(newCrds) {
-    const [r, c] = newCrds;
-    const [acrossId, downId] = board[r][c].wordId;
+  function handleClick(id) {
+    const cell = board.flat().find(cell => cell.id == id)
+    const [acrossId, downId] = cell.wordId;
 
     if (acrossId > 0 && downId > 0) {
       // same clicked
-      if (r == currentCrds[0] && c == currentCrds[1]) {
-        setDownward(!downward)
+      if (activeCell == id) {
+        setOrientation(orientation == 'across' ? 'down' : 'across')
       } else {
-        setDownward(false)
+        setOrientation('across')
       }
     } else if (acrossId > 0) {
-      setDownward(false)
+      setOrientation('across')
     } else if (downId > 0) {
-      setDownward(true)
+      setOrientation('down')
     }
     
-    setCurrentCrds(newCrds)
+    setActiveCell(id)
   }
 
   function keyClicked(key) {
-    const [r, c] = currentCrds;
-
     // update q
-    const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
-      if (_r == r && _c == c) {
+    const updatedBoard = board.map(row => row.map(col => {
+      if (activeCell == col.id) {
         return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
 
     setBoard(updatedBoard)
-    
+
+    let [r, c] = cell.crds;
+
     // check if movable
     let top = r > 0 && board[r - 1][c].value
     let bottom = r < board.length - 1 && board[r + 1][c].value
@@ -67,31 +70,30 @@ export default function Puzzle({ puzzle }) {
     let right = c < board[r].length - 1 && board[r][c + 1].value
 
     // direction to move
-    const west = !downward && key == 'del' && left;
-    const east = !downward && key != 'del' && right;
-    const north = downward && key == 'del' && top;
-    const south = downward && key != 'del' && bottom;
+    const west = orientation == 'across' && key == 'del' && left;
+    const east = orientation == 'across' && key != 'del' && right;
+    const north = orientation == 'down' && key == 'del' && top;
+    const south = orientation == 'down' && key != 'del' && bottom;
     
     if (west) {
-      setCurrentCrds([r, c - 1])
+      setActiveCell(board[r][c - 1].id)
     } else if (east) {
-      setCurrentCrds([r, c + 1])
+      setActiveCell(board[r][c + 1].id)
     } else if (north) {
-      setCurrentCrds([r - 1, c])
+      setActiveCell(board[r - 1][c].id)
     } else if (south) {
-      setCurrentCrds([r + 1, c])
+      setActiveCell(board[r + 1][c].id)
     }
   }
 
-  const caption = puzzle.captions[downward ? 'down' : 'across']
+  const caption = puzzle.captions[orientation]
     .find(caption => {
-      let [r, c] = currentCrds;
-      if (r + c < 0) return;
-
-      let [acrossId, downId] = board[r][c].wordId;
-      let wordId = downward ? downId : acrossId;
-
-      return wordId == caption.wordId;
+      if (activeCell) {
+        let [acrossId, downId] = cell.wordId;
+        let wordId = orientation == 'across' ? acrossId : downId;
+  
+        return wordId == caption.wordId;
+      }
     })
 
   const hasError = board.flat()
@@ -119,8 +121,9 @@ export default function Puzzle({ puzzle }) {
       <div className="px-2">
         <Board 
           board={board} 
-          currentCrds={currentCrds}
-          downward={downward}
+          cell={cell}
+          activeCell={activeCell}
+          orientation={orientation}
           handleClick={handleClick} 
           done={done} 
         />

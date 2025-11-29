@@ -1,40 +1,38 @@
 export default function Board({ 
   board, 
-  currentCrds, 
-  downward, 
+  cell,
+  activeCell,
+  orientation, 
   handleClick, 
   done }) {
 
-  function bgColor(cellCrds, q, value, wordId) {
-
-    let [r, c] = cellCrds;
+  function bgColor(id, correct, wordId) {
 
     // result marks
     if (done) {
-      if (q != value) {
+      if (correct) {
+        return 'bg-blue-100'
+      } else {
         return 'bg-red-100'
       }
-      return 'bg-blue-100'
     }
     
-    // before beginning
-    if (currentCrds[0] + currentCrds[1] < 0) {
-      return 'bg-gray-100';
-    }
+    if (activeCell) {
+      // focused cell
+      if (id == activeCell) {
+        return 'bg-yellow-300'
+      } 
 
-    // focused cell
-    if (r == currentCrds[0] && c == currentCrds[1]) {
-      return 'bg-yellow-300'
-    } 
-    
-    // across or down cells
-    if (!downward) {
-      if (board[currentCrds[0]][currentCrds[1]].wordId[0] == wordId[0]) {
-        return 'bg-yellow-100'
-      }
-    } else {
-      if (board[currentCrds[0]][currentCrds[1]].wordId[1] == wordId[1]) {
-        return 'bg-yellow-100'
+      // across
+      if (orientation == 'across') {
+        if (cell.wordId[0] == wordId[0]) {
+          return 'bg-yellow-100'
+        }
+      // down
+      } else {
+        if (cell.wordId[1] == wordId[1]) {
+          return 'bg-yellow-100'
+        }
       }
     }
 
@@ -67,9 +65,9 @@ export default function Board({
                     <input
                       id={col.id}
                       type="text"
-                      className={`absolute inset-0 text-center outline-none font-bold ${bgColor([r, c], col.q, col.value, col.wordId)}`}
+                      className={`absolute inset-0 text-center outline-none font-bold ${bgColor(col.id, col.q == col.value, col.wordId)}`}
                       value={done ? col.value : col.q}
-                      onClick={done ? null : (e) => handleClick([r, c])}
+                      onClick={done ? null : (e) => handleClick(col.id)}
                       readOnly
                     />
                   </>
