@@ -1,12 +1,16 @@
+import { ACROSS, DOWN } from "@/lib/client/contants";
+
 export default function Board({ 
   board, 
-  cell,
-  activeCell,
+  currentCrds, 
   orientation, 
   handleClick, 
-  done }) {
+  done 
+}) {
 
-  function bgColor(id, correct, wordId) {
+  function bgColor(cellCrds, correct, wordId) {
+    let [r1, c1] = currentCrds; 
+    let [r2, c2] = cellCrds;
 
     // result marks
     if (done) {
@@ -17,22 +21,18 @@ export default function Board({
       }
     }
     
-    if (activeCell) {
+    if (r1 + c1 >= 0) {
       // focused cell
-      if (id == activeCell) {
+      if (r2 == r1 && c2 == c1) {
         return 'bg-yellow-300'
       } 
 
-      // across
-      if (orientation == 'across') {
-        if (cell.wordId[0] == wordId[0]) {
-          return 'bg-yellow-100'
-        }
-      // down
-      } else {
-        if (cell.wordId[1] == wordId[1]) {
-          return 'bg-yellow-100'
-        }
+      // around cell
+      let i = orientation == ACROSS ? 0 : 1;
+      let aroundId = board[r1][c1].wordId[i];
+
+      if (aroundId == wordId[i]) {
+        return 'bg-yellow-100'
       }
     }
 
@@ -65,9 +65,9 @@ export default function Board({
                     <input
                       id={col.id}
                       type="text"
-                      className={`absolute inset-0 text-center outline-none font-bold ${bgColor(col.id, col.q == col.value, col.wordId)}`}
+                      className={`absolute inset-0 text-center outline-none font-bold ${bgColor([r, c], col.q == col.value, col.wordId)}`}
                       value={done ? col.value : col.q}
-                      onClick={done ? null : (e) => handleClick(col.id)}
+                      onClick={done ? null : (e) => handleClick([r, c])}
                       readOnly
                     />
                   </>

@@ -2,18 +2,17 @@ import { useEffect, useRef, useState } from "react"
 import Keyboard from "./keyboard";
 import Answer from "./answer";
 import Board from "./board";
+import { ACROSS, DOWN } from "@/lib/client/contants";
+import o from "@/lib/client/contants";
+console.log(o) // { foo: 'bar' }
 
 export default function Puzzle({ puzzle }) {
   
   const [board, setBoard] = useState(puzzle.board);
-  const [activeCell, setActiveCell] = useState('')
-  const [orientation, setOrientation] = useState('across')
+  const [currentCrds, setCurrentCrds] = useState([-1, -1])
+  const [orientation, setOrientation] = useState(ACROSS)
   const [done, setDone] = useState(false);
   const messageRef = useRef(null);
-
-  const cell = board.flat().find(cell => cell.id == activeCell)
-
-  // console.log('activeCell', activeCell)
 
   useEffect(() => {
     if (done) {
@@ -30,39 +29,41 @@ export default function Puzzle({ puzzle }) {
     setDone(true)
   }
 
-  function handleClick(id) {
-    const cell = board.flat().find(cell => cell.id == id)
-    const [acrossId, downId] = cell.wordId;
+  function handleClick(newCrds) {
+    const [r1, c1] = currentCrds;
+    const [r2, c2] = newCrds;
+
+    const [acrossId, downId] = board[r2][c2].wordId;
 
     if (acrossId > 0 && downId > 0) {
       // same clicked
-      if (activeCell == id) {
-        setOrientation(orientation == 'across' ? 'down' : 'across')
+      if (r2 == r1 && c2 == c1) {
+        setOrientation(orientation == ACROSS ? DOWN : ACROSS)
       } else {
-        setOrientation('across')
+        setOrientation(ACROSS)
       }
     } else if (acrossId > 0) {
-      setOrientation('across')
+      setOrientation(ACROSS)
     } else if (downId > 0) {
-      setOrientation('down')
+      setOrientation(DOWN)
     }
     
-    setActiveCell(id)
+    setCurrentCrds(newCrds)
   }
 
   function keyClicked(key) {
+    const [r, c] = currentCrds;
+
     // update q
-    const updatedBoard = board.map(row => row.map(col => {
-      if (activeCell == col.id) {
+    const updatedBoard = board.map((row, _r) => row.map((col, _c) => {
+      if (_r == r && _c == c) {
         return { ...col, q: key == 'del' ? '': key }
       }
       return col;
     }))
 
     setBoard(updatedBoard)
-
-    let [r, c] = cell.crds;
-
+    
     // check if movable
     let top = r > 0 && board[r - 1][c].value
     let bottom = r < board.length - 1 && board[r + 1][c].value
@@ -70,42 +71,57 @@ export default function Puzzle({ puzzle }) {
     let right = c < board[r].length - 1 && board[r][c + 1].value
 
     // direction to move
-    const west = orientation == 'across' && key == 'del' && left;
-    const east = orientation == 'across' && key != 'del' && right;
-    const north = orientation == 'down' && key == 'del' && top;
-    const south = orientation == 'down' && key != 'del' && bottom;
+    const west = orientation == ACROSS && key == 'del' && left;
+    const east = orientation == ACROSS && key != 'del' && right;
+    const north = orientation == DOWN && key == 'del' && top;
+    const south = orientation == DOWN && key != 'del' && bottom;
     
     if (west) {
-      setActiveCell(board[r][c - 1].id)
+      setCurrentCrds([r, c - 1])
     } else if (east) {
-      setActiveCell(board[r][c + 1].id)
+      setCurrentCrds([r, c + 1])
     } else if (north) {
-      setActiveCell(board[r - 1][c].id)
+      setCurrentCrds([r - 1, c])
     } else if (south) {
-      setActiveCell(board[r + 1][c].id)
+      setCurrentCrds([r + 1, c])
     }
   }
 
-  const caption = puzzle.captions[orientation]
-    .find(caption => {
-      if (activeCell) {
-        let [acrossId, downId] = cell.wordId;
-        let wordId = orientation == 'across' ? acrossId : downId;
-  
-        return wordId == caption.wordId;
-      }
-    })
+  function getCaption() {
+    let [r, c] = currentCrds;
 
-  const hasError = board.flat()
-    .filter(cell => cell.q != cell.value)
-    .length > 0
+    if (r + c < 0) {
+      return '의미가 여기에 나타나요';
+    }
+    
+    let [acrossId, downId] = board[r][c].wordId;
+    let activeWordId = orientation == ACROSS ? acrossId : downId;
+
+    const caption = puzzle.captions
+      .find(caption => {
+        let a = caption.ot == orientation;
+        let b = activeWordId == caption.wordId
+        
+        if (a && b) {
+          return caption;
+        }
+      });
+
+    return caption.content;
+  }
+
+  function hasError() {
+    return board.flat()
+      .filter(cell => cell.q != cell.value)
+      .length > 0
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       {/* result messages */}
       {done && (
         <div className="px-2 py-4" ref={messageRef}>
-          {hasError ? (
+          {hasError() ? (
             <p className="text-lg font-semibold text-red-400">
               내일 다시 만나요 🥲
             </p>
@@ -121,8 +137,7 @@ export default function Puzzle({ puzzle }) {
       <div className="px-2">
         <Board 
           board={board} 
-          cell={cell}
-          activeCell={activeCell}
+          currentCrds={currentCrds}
           orientation={orientation}
           handleClick={handleClick} 
           done={done} 
@@ -134,11 +149,9 @@ export default function Puzzle({ puzzle }) {
       ) : (
         <>
           {/* Captions */}
-          <div className="mt-4 px-2">
-            <p className="text-center border-b border-gray-300 pb-1">
-              {caption ? caption.content : '의미가 여기에 나타나요'}
-            </p>
-          </div>
+          <p className="my-4 text-center">
+            {getCaption()}
+          </p>
           
           {/* Keyboard */}
           <div className="mt-4">
@@ -148,14 +161,12 @@ export default function Puzzle({ puzzle }) {
           </div>
 
           {/* TIP */}
-          <div className="mt-12 px-2">
-            <blockquote className="px-4 py-2 border-l-6 border-red-300 bg-red-100">
-              <p className="my-2 text-sm text-red-400">
-                모르는 단어가 나와도 쉽게 포기하지 마세요!
-                사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 된답니다!
-              </p>
-            </blockquote>
-          </div>
+          <blockquote className="mt-8 px-4 py-2 bg-yellow-100">
+            <p className="my-4 text-sm text-yellow-700">
+              모르는 단어가 나와도 쉽게 포기하지 마세요!
+              사전을 찾아가면서 퍼즐을 완성해나가다 보면 단어들도 내 것이 된답니다!
+            </p>
+          </blockquote>
 
           {/* Submit button */}
           <div className="px-2 mt-4">

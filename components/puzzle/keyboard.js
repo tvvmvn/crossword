@@ -9,13 +9,13 @@ export default function Keyboard({
 }) {
 
   return (
-    <div className="h-[180px] bg-gray-100 px-2 py-4">
-      <div className="h-full grid grid-cols-20 gap-1">
+    <div className="h-[180px] bg-gray-200 px-2 py-4">
+      <div className="h-full grid grid-cols-20 gap-2">
         {keys.map((row, r) => row.map((col, c) => (
           <button
             key={col}
             type="button"
-            className={`col-span-2 ${col == 'a' && 'col-start-2'} ${col == 'z' && 'col-start-4'} bg-white`}
+            className={`col-span-2 ${col == 'a' && 'col-start-2'} ${col == 'z' && 'col-start-4'} bg-white rounded-sm`}
             onClick={() => keyClicked(col)}
           >
             {col}
@@ -23,7 +23,7 @@ export default function Keyboard({
         )))}
         <button
           type="button"
-          className="col-span-3 bg-gray-300"
+          className="col-span-3 bg-gray-300 rounded-sm"
           onClick={() => keyClicked('del')}
         >
           ⌫

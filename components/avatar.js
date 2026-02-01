@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 
 // captions
 const FILTER_MAP = {
-  가로: 'across',
-  세로: 'down',
+  가로: (caption) => caption.ot == 'across',
+  세로: (caption) => caption.ot == 'down',
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
@@ -80,7 +80,7 @@ export default function Avatar({ d, puzzle }) {
               {name}
             </h3>
             <ul>
-              {captions[FILTER_MAP[name]].map(caption => (
+              {captions.filter(FILTER_MAP[name]).map(caption => (
                 <li key={caption.label}>
                   {caption.label} {caption.content}
                 </li>

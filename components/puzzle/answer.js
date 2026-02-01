@@ -1,12 +1,9 @@
-import { SlKey } from "react-icons/sl";
-import { TfiKey } from "react-icons/tfi";
-import { RiKey2Line } from "react-icons/ri";
 import { useState } from "react";
 
 // captions
 const FILTER_MAP = {
-  가로: 'across',
-  세로: 'down',
+  가로: (caption) => caption.ot == 'across',
+  세로: (caption) => caption.ot == 'down',
 }
 
 const FILTER_NAMES = Object.keys(FILTER_MAP)
@@ -30,7 +27,7 @@ export default function Verbose({ captions }) {
           ))}
         </div>
         <ul className="mt-8 px-2 pb-4">
-          {captions[FILTER_MAP[active]].map(caption => (
+          {captions.filter(FILTER_MAP[active]).map(caption => (
             <li
               key={caption.label}
               className="mt-4"

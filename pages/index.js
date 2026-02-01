@@ -1,6 +1,5 @@
 import Link from "next/link"
-import PuzzleGenerator from "@/lib/PuzzleGenerator"
-import Board from "@/lib/Board"
+import Puzzleg from "@/lib/Puzzle"
 import getWords from "@/lib/data"
 import { getDateTime } from "@/lib/time"
 // components
@@ -13,22 +12,23 @@ import HeaderAd from "@/components/header-ad"
 import FooterAd from "@/components/footer-ad"
 // icons
 import { FaRegEnvelope, FaGithub, FaInstagram } from 'react-icons/fa';
-import { AiOutlineMail } from "react-icons/ai";
 import { FaRegCalendarCheck } from "react-icons/fa6";
 import { PiMailboxDuotone, PiCheckerboardFill } from "react-icons/pi";
 import { AiOutlineBell } from "react-icons/ai";
-import { HiPuzzlePiece, HiOutlinePuzzlePiece } from "react-icons/hi2";
 
 export async function getStaticProps() {
   try {
     let words = await getWords(30);
-    let puzzleGenerator = new PuzzleGenerator(new Board(12, 12), words);
-    let puzzle = puzzleGenerator.create();
+    let puzzle = new Puzzleg(12, 12, words);
 
     return {
+      // dto
       props: {
         d: getDateTime(),
-        puzzle
+        puzzle: { 
+          board: puzzle.board,
+          captions: puzzle.captions
+        }
       }
     }
   } catch (ex) {
@@ -62,10 +62,10 @@ export default function Home({ d, puzzle }) {
 
       {/* Title */}
       <div className="mt-8 px-2">
-        <h1 className="my-4 text-2xl font-semibold">
+        <h1 className="mt-4 text-2xl font-semibold">
           {month}월 {date}일 {day}요일 🤓
         </h1>
-        <div className="flex items-center">
+        <div className="mt-4 flex items-center">
           <FaRegCalendarCheck 
             size={20} 
             className="text-red-400" 
@@ -80,7 +80,7 @@ export default function Home({ d, puzzle }) {
       <HeaderAd />
 
       {/* Puzzle */}
-      <div className="mt-12">
+      <div className="mt-8">
         <Puzzle puzzle={puzzle} />
       </div>
 
